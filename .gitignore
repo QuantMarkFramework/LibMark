@@ -1,0 +1,7 @@
+dist
+LibMark.egg-info
+__pycache__
+.vscode
+.pytest_cache
+*.egg-info
+build

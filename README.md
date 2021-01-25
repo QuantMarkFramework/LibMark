@@ -1,1 +1,3 @@
-# LibMark
+# QuantMark library (LibMark)
+
+Crawling skeleton.
