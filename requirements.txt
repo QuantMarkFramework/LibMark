@@ -1,0 +1,2 @@
+setuptools
+tequila-basic==1.0.0
