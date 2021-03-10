@@ -1,6 +1,7 @@
 import functools
 import numpy as np
 
+CHEMICAL_ACCURACY = 1/627.5094740631
 
 class VQEResult:
 	"""
@@ -85,12 +86,29 @@ class VQEResult:
 	def qubit_count(self):
 		return self._circuit.n_qubits
 
+	@property
+	@functools.lru_cache()
+	def success_rate(self):
+		if not self.target_value:
+			return None
+		success = 0
+		for result in self._results:
+			value = result.history.energies[-1]
+			if abs(value - self.target_value) <= CHEMICAL_ACCURACY:
+				success += 1
+		return success / len(self._results) 
+
+
 	def __str__(self):
 		average = f'ACCURACY HISTORY:   {self.accuracy_history}\n' if self.accuracy_history else ''
+		success_rate = ''
+		if self.success_rate is not None:
+			success_rate = f'SUCCESS RATE:       {self.success_rate}\n'
 		return (
 			f'AVERAGE HISTORY:    {self.average_history}\n'
 			f'{average}'
 			f'QUBIT COUNT:        {self.qubit_count}\n'
 			f'GATE DEPTH:         {self.gate_depth}\n'
 			f'AVERAGE ITERATIONS: {self.average_iterations}\n'
+			f'{success_rate}'
 			)

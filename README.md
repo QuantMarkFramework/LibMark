@@ -1,6 +1,6 @@
 # QuantMark Library (LibMark)
 
-## Instalation
+## Installation
 > Currently this library supports only python 3.7
 
 Before installing the library it is recommended to install ps4 if you want to use molecules. It is recommended to use conda for easy installation.
@@ -51,7 +51,7 @@ result = qm.vqe_benchmark(
 	circuit=circuit,
 	optimizer=optimizer,
 	backend=backend,
-    repetitions=100
+	repetitions=100
 )
 
 # Print result
