@@ -9,13 +9,13 @@ class QMOptimizer:
 			if module == "scipy":
 				from tequila.optimizers.optimizer_scipy import minimize
 				self._minimize = minimize
-			if module == 'gd':
+			elif module == 'gd':
 				from tequila.optimizers.optimizer_gd import minimize
 				self._minimize = minimize
-			if module == 'gpyopt':
+			elif module == 'gpyopt':
 				from tequila.optimizers.optimizer_gpyopt import minimize
 				self._minimize = minimize
-			if module == 'gd':
+			elif module == 'phoenics':
 				from tequila.optimizers.optimizer_phoenics import minimize
 				self._minimize = minimize
 		self._module = module
