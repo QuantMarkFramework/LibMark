@@ -6,3 +6,6 @@ __pycache__
 *.egg-info
 build
 timer.dat
+*.out
+*.hdf5
+*.clean
