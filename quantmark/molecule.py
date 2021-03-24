@@ -44,7 +44,7 @@ def orbitals_pattern():
 		A1 1 2 4 5 7
 		B1 0 2
 	"""
-	return re.compile("^([A-Q]\d( \d+)+)+$")
+	return re.compile("^(\n?[A-Q]\d( \d+)+\n?)+$")
 
 @functools.lru_cache()
 def orbital_pattern():
