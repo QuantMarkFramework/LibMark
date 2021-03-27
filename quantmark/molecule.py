@@ -23,11 +23,13 @@ SUPPORTED_ATOMS = [
 	"Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn"
 ]
 
+
+def create_multiline_regex(one_line: str):
+	return re.compile(f'^(\s*{one_line}\s*(\r?\n))*(\s*{one_line}\s*)$')
+
 @functools.lru_cache()
 def geometry_pattern():
-	return re.compile(
-		f'^(\n?({"|".join(SUPPORTED_ATOMS)})( \d*\.?\d*){"{3}"}\n?)+$'
-	)
+	return create_multiline_regex(f'(({"|".join(SUPPORTED_ATOMS)})( \d*\.?\d*){"{3}"})')
 
 def validate_geometry_syntax(geometry: str) -> bool:
 	"""
@@ -44,7 +46,7 @@ def orbitals_pattern():
 		A1 1 2 4 5 7
 		B1 0 2
 	"""
-	return re.compile("^(\n?[A-Q]\d( \d+)+\n?)+$")
+	return create_multiline_regex("([A-Q]\d( \d+)+)")
 
 @functools.lru_cache()
 def orbital_pattern():
