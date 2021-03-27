@@ -6,7 +6,7 @@ def read_requirements(filename):
 
 setup (
 	name='quantmark',
-	packages=find_packages(include=['quantmark']),
+	packages=find_packages(),
 	version='0.0.1',
 	description='test',
 	license='MIT',
