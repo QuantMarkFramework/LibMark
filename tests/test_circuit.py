@@ -57,3 +57,8 @@ class TestCircuit(unittest.TestCase):
 		print(string)
 		new_circuit = circuit.circuit_from_string(string)
 		self.assertEqual(new_circuit, valid_circuit)
+
+	def test_long_line_break_validation(self):
+		test_circuit = 'circuit:\r\nX(target=(1,), control=(3,))'
+		result = circuit.validate_circuit_syntax(test_circuit)
+		self.assertTrue(result)
