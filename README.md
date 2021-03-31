@@ -58,6 +58,7 @@ result = qm.vqe_benchmark(
 print(result)
 ```
 
+The circuit and molecule used are originally from [tequila-tutorials](https://github.com/aspuru-guzik-group/tequila-tutorials/blob/main/Chemistry.ipynb).
 # Setting up conda environment
 ```shell
 # Create environment with python 3.7, change 'envname' to preferred name
