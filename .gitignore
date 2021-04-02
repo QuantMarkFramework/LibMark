@@ -9,3 +9,4 @@ timer.dat
 *.out
 *.hdf5
 *.clean
+*.pyc
