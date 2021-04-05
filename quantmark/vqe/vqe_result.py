@@ -96,8 +96,11 @@ class VQEResult:
 			value = result.history.energies[-1]
 			if abs(value - self.target_value) <= CHEMICAL_ACCURACY:
 				success += 1
-		return success / len(self._results) 
+		return success / len(self._results)
 
+	@property
+	def results(self):
+		return self._results
 
 	def __str__(self):
 		average = f'ACCURACY HISTORY:   {self.accuracy_history}\n' if self.accuracy_history else ''
