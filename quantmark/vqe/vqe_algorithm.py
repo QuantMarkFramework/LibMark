@@ -17,7 +17,7 @@ class VQEAlgorithm:
 		hamiltonian: QubitHamiltonian = None,
 		silent: bool = True,
 		repetitions: int = 100,
-		target_value: int = None 
+		target_value: int = None
 		):
 		if not molecule and not hamiltonian:
 			raise Exception('You have give to a molecule or a hamiltonian.')
@@ -49,7 +49,7 @@ class VQEAlgorithm:
 	@optimizer.setter
 	def optimizer(self, optimizer):
 		self._optimizer = optimizer
-	
+
 	@property
 	def molecule(self):
 		return self._molecule
@@ -59,7 +59,7 @@ class VQEAlgorithm:
 		if self._hamiltonian:
 			raise Exception('Cannot set molecule when there is a hamiltonian.')
 		self._molecule = molecule
-	
+
 	@property
 	def hamiltonian(self):
 		return self._hamiltonian
@@ -85,7 +85,7 @@ class VQEAlgorithm:
 	@silent.setter
 	def silent(self, silent):
 		self._silent = silent
-	
+
 	@property
 	def repetitions(self):
 		return self._repetitions
@@ -93,7 +93,7 @@ class VQEAlgorithm:
 	@repetitions.setter
 	def repetitions(self, repetitions):
 		self._repetitions = repetitions
-	
+
 	@property
 	def target_value(self):
 		return self._target_value
@@ -118,7 +118,7 @@ class VQEAlgorithm:
 				objective=objective,
 				backend=self._backend.backend,
 				silent=self._silent)
-		return Result(self._circuit, 
+		return Result(self._circuit,
 			self._optimizer,
 			self._backend,
 			results,
