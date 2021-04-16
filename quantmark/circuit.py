@@ -18,9 +18,9 @@ class GateDict:
 	control: typing.List[str] = None
 	parameter: typing.Union[str, float] = None
 
-def circuit_pattern():
+def circuit_pattern(compile: bool = True):
 	options = [NP_ONEQ_GATES_REGEX, P_ONEQ_GATES_REGEX, SWAP_GATE_REGEX]
-	return create_multiline_regex(options, first_line='circuit:')
+	return create_multiline_regex(options, first_line='circuit:', compile=compile)
 
 def validate_circuit_syntax(circuit: str) -> bool:
 	return bool(circuit_pattern().match(circuit))
