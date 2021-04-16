@@ -46,7 +46,7 @@ circuit += tq.gates.X(target=2, control=0)
 circuit += tq.gates.X(target=3, control=1)
 
 # Run the benchmark
-result = qm.vqe_benchmark(
+algorithm = qm.VQEAlgorithm(
 	molecule=molecule,
 	circuit=circuit,
 	optimizer=optimizer,
@@ -55,10 +55,19 @@ result = qm.vqe_benchmark(
 )
 
 # Print result
-print(result)
+print(algorithm.analyze())
 ```
 
 The circuit and molecule used are originally from [tequila-tutorials](https://github.com/aspuru-guzik-group/tequila-tutorials/blob/main/Chemistry.ipynb).
+
+# Changing parts between analyzing
+```python
+algorithm.molecule = new_molecule
+algorithm.circuit = new_circuit
+algorithm.optimizer = new_optimizer
+algorithm.backend = new_backend
+```
+
 # Setting up conda environment
 ```shell
 # Create environment with python 3.7, change 'envname' to preferred name
