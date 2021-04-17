@@ -2,6 +2,7 @@ import re
 import typing
 from dataclasses import dataclass
 import tequila as tq
+from tequila.circuit.circuit import QCircuit
 from quantmark.exceptions.same_control_and_target import SameControlAndTarget
 from quantmark.exceptions.invalid_syntax_error import InvalidSyntaxError
 from quantmark.create_multiline_regex import create_multiline_regex
@@ -17,6 +18,23 @@ class GateDict:
 	target: typing.List[str]
 	control: typing.List[str] = None
 	parameter: typing.Union[str, float] = None
+
+class CircuitInfo:
+	def __init__(self, circuit: QCircuit):
+		self.qubit_count = circuit.n_qubits
+		self.gate_depth = circuit.depth
+		self.gate_count = len(circuit.gates)
+		self.parameter_count = len(list(circuit.make_parameter_map().keys()))
+
+	def __str__(self):
+		return (
+			f'QUBIT COUNT:        {self.qubit_count}\n'
+			f'GATE DEPTH:         {self.gate_depth}\n'
+			f'GATE COUNT:         {self.gate_count}\n'
+			f'PARAMETER COUNT:    {self.parameter_count}\n'
+		)
+
+
 
 def circuit_pattern(compile: bool = True):
 	options = [NP_ONEQ_GATES_REGEX, P_ONEQ_GATES_REGEX, SWAP_GATE_REGEX]

@@ -54,8 +54,11 @@ algorithm = qm.VQEAlgorithm(
 	repetitions=100
 )
 
-# Print result
+# Analyze algorithm
 print(algorithm.analyze())
+
+# Analyze only circuit (Does not run the algorithm)
+print(algorithm.analyze_circuit())
 ```
 
 The circuit and molecule used are originally from [tequila-tutorials](https://github.com/aspuru-guzik-group/tequila-tutorials/blob/main/Chemistry.ipynb).

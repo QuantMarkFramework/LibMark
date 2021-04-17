@@ -5,7 +5,7 @@ from tequila import QubitHamiltonian
 from quantmark.qm_backend import QMBackend as Backend
 from quantmark.qm_optimizer import QMOptimizer as Optimizer
 from quantmark.vqe.vqe_result import VQEResult as Result
-from quantmark.circuit import circuit_from_string
+from quantmark.circuit import CircuitInfo, circuit_from_string
 
 class VQEAlgorithm:
 	def __init__(
@@ -101,6 +101,9 @@ class VQEAlgorithm:
 	@target_value.setter
 	def target_value(self, target_value):
 		self._target_value = target_value
+
+	def analyze_circuit(self):
+		return CircuitInfo(self.circuit)
 
 	def analyze(self):
 		if not self._molecule and not self._hamiltonian:
