@@ -14,7 +14,9 @@ VALID_CIRCUIT_STRING = """
 valid_circuit = tq.gates.Ry(angle='a', target=0)
 valid_circuit += tq.gates.Phase(angle=2, target=2, control=1)
 valid_circuit += tq.gates.SWAP(first=1, second=2)
+valid_circuit += tq.gates.Ry(angle='a', target=0)
 valid_circuit += tq.gates.H(target=1, control=2)
+valid_circuit += tq.gates.Ry(angle='b', target=0)
 
 class TestCircuit(unittest.TestCase):
 	def test_validate_returns_true_on_valid_circuit(self):
@@ -62,3 +64,19 @@ class TestCircuit(unittest.TestCase):
 		test_circuit = 'circuit:\r\nX(target=(1,), control=(3,))'
 		result = circuit.validate_circuit_syntax(test_circuit)
 		self.assertTrue(result)
+
+	def test_circuit_info_returns_right_qubit_count(self):
+		info = circuit.CircuitInfo(valid_circuit)
+		self.assertEqual(info.qubit_count, 3)
+
+	def test_circuit_info_returns_right_gate_depth(self):
+		info = circuit.CircuitInfo(valid_circuit)
+		self.assertEqual(info.gate_depth, 3)
+
+	def test_circuit_info_returns_right_gate_count(self):
+		info = circuit.CircuitInfo(valid_circuit)
+		self.assertEqual(info.gate_count, 6)
+
+	def test_circuit_info_returns_right_parameter_count(self):
+		info = circuit.CircuitInfo(valid_circuit)
+		self.assertEqual(info.parameter_count, 2)

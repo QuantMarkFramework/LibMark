@@ -1,5 +1,6 @@
 import functools
 import numpy as np
+from quantmark.circuit import CircuitInfo
 
 CHEMICAL_ACCURACY = 1/627.5094740631
 
@@ -23,6 +24,7 @@ class VQEResult:
 		self._optimizer = optimizer
 		self._hamiltonian = hamiltonian
 		self._target_value = target_value
+		self._circuit_info = CircuitInfo(circuit)
 
 	@property
 	@functools.lru_cache()
@@ -79,12 +81,22 @@ class VQEResult:
 	@property
 	@functools.lru_cache()
 	def gate_depth(self):
-		return self._circuit.depth
+		return self._circuit_info.gate_depth
 
 	@property
 	@functools.lru_cache()
 	def qubit_count(self):
-		return self._circuit.n_qubits
+		return self._circuit_info.qubit_count
+
+	@property
+	@functools.lru_cache()
+	def gate_count(self):
+		return self._circuit_info.gate_count
+
+	@property
+	@functools.lru_cache()
+	def parameter_count(self):
+		return self._circuit_info.parameter_count
 
 	@property
 	@functools.lru_cache()
@@ -112,6 +124,8 @@ class VQEResult:
 			f'{average}'
 			f'QUBIT COUNT:        {self.qubit_count}\n'
 			f'GATE DEPTH:         {self.gate_depth}\n'
+			f'GATE COUNT:         {self.gate_count}\n'
+			f'PARAMETER COUNT:    {self.parameter_count}\n'
 			f'AVERAGE ITERATIONS: {self.average_iterations}\n'
 			f'{success_rate}'
 			)

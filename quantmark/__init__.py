@@ -6,3 +6,4 @@ from quantmark.vqe.vqe_result import VQEResult
 from quantmark.vqe.vqe_algorithm import VQEAlgorithm
 import quantmark.molecule as molecule
 import quantmark.circuit as circuit
+from quantmark.circuit import CircuitInfo
