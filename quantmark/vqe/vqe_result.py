@@ -2,13 +2,15 @@ import functools
 import numpy as np
 from quantmark.circuit import CircuitInfo
 
-CHEMICAL_ACCURACY = 1/627.5094740631
+CHEMICAL_ACCURACY = 1 / 627.5094740631
+
 
 class VQEResult:
 	"""
 	Result from quantmark benchamrk.
 	"""
-	def __init__(self,
+	def __init__(
+		self,
 		circuit,
 		optimizer,
 		backend,
@@ -16,7 +18,7 @@ class VQEResult:
 		molecule=None,
 		hamiltonian=None,
 		target_value=None
-		):
+	):
 		self._molecule = molecule
 		self._circuit = circuit
 		self._backend = backend
@@ -45,9 +47,9 @@ class VQEResult:
 		for index, value in enumerate(res):
 			target = value
 			target_lenght = len(target)
-			new_value = [target[target_lenght - 1]] * (longest_history-target_lenght)
+			new_value = [target[target_lenght - 1]] * (longest_history - target_lenght)
 			res[index] = target + new_value
-		average_history=np.matrix(res).mean(0, dtype=np.float64).tolist()[0]
+		average_history = np.matrix(res).mean(0, dtype=np.float64).tolist()[0]
 		return average_history
 
 	@property
@@ -64,7 +66,7 @@ class VQEResult:
 	@functools.lru_cache()
 	def average_iterations(self):
 		iteration_counts = [len(i.history.energies) for i in self._results]
-		return sum(iteration_counts)/len(iteration_counts)
+		return sum(iteration_counts) / len(iteration_counts)
 
 	@property
 	@functools.lru_cache()
@@ -128,4 +130,4 @@ class VQEResult:
 			f'PARAMETER COUNT:    {self.parameter_count}\n'
 			f'AVERAGE ITERATIONS: {self.average_iterations}\n'
 			f'{success_rate}'
-			)
+		)

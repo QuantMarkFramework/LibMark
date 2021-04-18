@@ -24,12 +24,14 @@ SUPPORTED_ATOMS = [
 	"Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn"
 ]
 
+
 @functools.lru_cache()
 def geometry_pattern(compile: bool = True):
 	return create_multiline_regex(
-		f'(({"|".join(SUPPORTED_ATOMS)})( \d*\.?\d*){"{3}"})',
+		fr'(({"|".join(SUPPORTED_ATOMS)})( \d*\.?\d*){"{3}"})',
 		compile=compile
-		)
+	)
+
 
 def validate_geometry_syntax(geometry: str) -> bool:
 	"""
@@ -38,6 +40,7 @@ def validate_geometry_syntax(geometry: str) -> bool:
 		Li 0.0 0.0 1.6
 	"""
 	return bool(geometry_pattern().match(geometry))
+
 
 @functools.lru_cache()
 def orbitals_pattern(compile: bool = True):
@@ -48,19 +51,22 @@ def orbitals_pattern(compile: bool = True):
 	"""
 	return create_multiline_regex(orbital_pattern(compile=False), compile=compile)
 
+
 @functools.lru_cache()
 def orbital_pattern(compile: bool = True):
 	"""
 	Syntax:
 		A1 1 2 3
 	"""
-	regex_string = "([A-Q]\d( \d+)+)"
+	regex_string = r"([A-Q]\d( \d+)+)"
 	if compile:
 		return re.compile(regex_string)
 	return regex_string
 
+
 def validate_orbitals_syntax(orbitals: str) -> bool:
 	return bool(orbitals_pattern().match(orbitals))
+
 
 def orbitals_from_string(orbitals: str) -> dict:
 	if not validate_orbitals_syntax(orbitals):
@@ -73,6 +79,7 @@ def orbitals_from_string(orbitals: str) -> dict:
 			raise DuplicateValueError
 		orbitals_dictionary[metrics[0]] = [int(i) for i in metrics[1:]]
 	return orbitals_dictionary
+
 
 def create(
 	geometry: str,

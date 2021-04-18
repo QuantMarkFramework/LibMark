@@ -1,5 +1,6 @@
 import json
 
+
 class QMOptimizer:
 	"""
 	Wrapper that makes sure the same method for optimizing is used.

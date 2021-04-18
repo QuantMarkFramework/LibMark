@@ -11,12 +11,12 @@ def vqe_benchmark(
 	circuit: Circuit,
 	optimizer: Optimizer = Optimizer(),
 	backend: Backend = Backend(),
-	molecule = None,
+	molecule=None,
 	hamiltonian: QubitHamiltonian = None,
 	silent: bool = True,
 	repetitions: int = 100,
 	target_value: int = None
-	) -> Result:
+) -> Result:
 	if not molecule and not hamiltonian:
 		raise Exception('You have give to a molecule or a hamiltonina')
 	if molecule and hamiltonian:
