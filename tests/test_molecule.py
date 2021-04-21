@@ -1,6 +1,7 @@
 import unittest
 from quantmark import molecule
 
+
 class TestMolecule(unittest.TestCase):
 	def test_validate_geometry_returns_true_on_valid(self):
 		geometry = """

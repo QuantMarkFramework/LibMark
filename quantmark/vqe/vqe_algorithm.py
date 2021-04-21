@@ -7,18 +7,19 @@ from quantmark.qm_optimizer import QMOptimizer as Optimizer
 from quantmark.vqe.vqe_result import VQEResult as Result
 from quantmark.circuit import CircuitInfo, circuit_from_string
 
+
 class VQEAlgorithm:
 	def __init__(
 		self,
 		circuit: Circuit,
 		optimizer: Optimizer = Optimizer(),
 		backend: Backend = Backend(),
-		molecule = None,
+		molecule=None,
 		hamiltonian: QubitHamiltonian = None,
 		silent: bool = True,
 		repetitions: int = 100,
 		target_value: int = None
-		):
+	):
 		if not molecule and not hamiltonian:
 			raise Exception('You have give to a molecule or a hamiltonian.')
 		if molecule and hamiltonian:
@@ -121,9 +122,11 @@ class VQEAlgorithm:
 				objective=objective,
 				backend=self._backend.backend,
 				silent=self._silent)
-		return Result(self._circuit,
+		return Result(
+			self._circuit,
 			self._optimizer,
 			self._backend,
 			results,
 			molecule=self._molecule,
-			target_value=self._target_value)
+			target_value=self._target_value
+		)

@@ -3,7 +3,7 @@ import tequila as tq
 from quantmark import circuit
 
 VALID_CIRCUIT_STRING = """
-			circuit: 
+			circuit:
 			X(target=(1,), control=(0,))
 			Y(target=(1,), control=(0,))
 			H(target=(0,))
@@ -17,6 +17,7 @@ valid_circuit += tq.gates.SWAP(first=1, second=2)
 valid_circuit += tq.gates.Ry(angle='a', target=0)
 valid_circuit += tq.gates.H(target=1, control=2)
 valid_circuit += tq.gates.Ry(angle='b', target=0)
+
 
 class TestCircuit(unittest.TestCase):
 	def test_validate_returns_true_on_valid_circuit(self):
@@ -45,7 +46,7 @@ class TestCircuit(unittest.TestCase):
 
 	def test_no_control_swap_gate_validation(self):
 		problematic_circuit = """
-			circuit: 
+			circuit:
 			Ry(target=(0,), parameter=a)
 			Phase(target=(2,), control=(1,), parameter=2.0)
 			SWAP(target=(1, 2), control=())

@@ -1,0 +1,5 @@
+[flake8]
+ignore = W191
+exclude = __init__.py
+max-complexity = 10
+max-line-length = 100
