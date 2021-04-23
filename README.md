@@ -70,7 +70,7 @@ print(algorithm.analyze())
 print(algorithm.analyze_circuit())
 ```
 ```python
-# Changing parts between analyzing (can change only one).
+# Changing parts between analyzing (can change one or multiple).
 algorithm.molecule = new_molecule
 algorithm.circuit = new_circuit
 algorithm.optimizer = new_optimizer
