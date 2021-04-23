@@ -1,11 +1,34 @@
-import json
 
 
 class QMOptimizer:
 	"""
-	Wrapper that makes sure the same method for optimizing is used.
+	A class that holds information about a optimizer and can be given as a parameter to an
+	algorithm.
+
+	Optimizing means minimizing in this case.
+
+	Methods
+	-------
+		minimize(objective, backend=None, silent=True):
+			Runs the optimizer on a given objective.
 	"""
 	def __init__(self, module: str = "scipy", method: str = "BFGS", *args, **kwarks):
+		"""
+		Creates a QMOptimizer object.
+
+		Parameters
+		----------
+			module : str
+				The module from which the optimizer (minimize) method should be used.
+
+				Supported modules are 'scipy', 'gd', 'gpyopt' and 'phoenics'.
+			method : str
+				The method to be used from the module.
+			*args :
+				Additional arguments to be passed to the module.
+			**kwarks :
+				Additional key arguments to be passed to the module.
+		"""
 		if isinstance(module, str):
 			if module == "scipy":
 				from tequila.optimizers.optimizer_scipy import minimize
@@ -24,7 +47,23 @@ class QMOptimizer:
 		self._args = args
 		self._kwarks = kwarks
 
-	def minimize(self, objective, backend=None, silent=True):
+	def minimize(self, objective, backend: str = None, silent: bool = True):
+		"""
+			Runs the optimizer on a given objective.
+
+		Parameters
+		----------
+			objective :
+				The objective to be minimized.
+			backend : str
+				The backend (simulator) to be used.
+			silent : bool
+				If True the minimizing process will not print information while it is running.
+
+		Returns
+		----------
+		The result from the minimizing process.
+		"""
 		return self._minimize(
 			objective=objective,
 			method=self._method,
@@ -38,22 +77,3 @@ class QMOptimizer:
 			*self._args,
 			**self._kwarks
 		)
-
-	def to_string(self):
-		"""
-		Returns a string that can be used to recreate the object with the
-		QMOptimizer.from_string() method.
-		"""
-		args = ";" + ";".join(self._args) if self._args else ""
-		kwarks = "KW" + json.dumps(self._kwarks) if self._kwarks else ""
-		return f'QMO;{self._module};{self._method}{args}{kwarks}'
-
-	@staticmethod
-	def from_string(object_string: str):
-		"""
-		Used to recreate object from string.
-		"""
-		data_kwarks = object_string.split('KW')
-		data = data_kwarks[0].split(';')
-		kwarks = json.loads(data_kwarks[1]) if data_kwarks[1] else {}
-		return QMOptimizer(*data[1:], **kwarks)

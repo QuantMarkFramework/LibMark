@@ -9,6 +9,37 @@ from quantmark.circuit import CircuitInfo, circuit_from_string
 
 
 class VQEAlgorithm:
+	"""
+	A class that holds all information about a Variational Quantum Algorithm. Used to analyze the
+	algorithm.
+
+	Attributes
+	----------
+		circuit : QCircuit
+			The quantum circuit of the algorithm.
+		optimizer : QMOptimizer
+			The optimizer of the algorithm.
+		molecule :
+			The target molecule (can not coexist with a hamiltonian property).
+		hamiltonian : QubitHamiltonian
+			The target hamiltonian (can not coexist with a molecule property).
+		backend : QMBackend
+			The backend (simulator) that the algorithm uses for quantum computation.
+		silent : bool
+			If True the minimizing process will not print information while it is running.
+		repetitions : int
+			The amount of times the algorithm is run during analyzing to get average values.
+		target_value : float
+			The value that you hope the algorithm reaches. If None and the moleucule parameter
+			is not none, the fci method is used to calculate a target value for analyzis.
+
+	Methods
+	-------
+		analyze_circuit() -> CircuitInfo:
+			TODO
+		analyze(self) -> Result:
+			TODO
+	"""
 	def __init__(
 		self,
 		circuit: Circuit,
@@ -18,8 +49,11 @@ class VQEAlgorithm:
 		hamiltonian: QubitHamiltonian = None,
 		silent: bool = True,
 		repetitions: int = 100,
-		target_value: int = None
+		target_value: float = None
 	):
+		"""
+		TODO
+		"""
 		if not molecule and not hamiltonian:
 			raise Exception('You have give to a molecule or a hamiltonian.')
 		if molecule and hamiltonian:
@@ -35,6 +69,7 @@ class VQEAlgorithm:
 
 	@property
 	def circuit(self):
+		"""The quantum circuit of the algorithm."""
 		return self._circuit
 
 	@circuit.setter
@@ -45,6 +80,7 @@ class VQEAlgorithm:
 
 	@property
 	def optimizer(self):
+		"""The optimizer of the algorithm."""
 		return self._optimizer
 
 	@optimizer.setter
@@ -53,6 +89,7 @@ class VQEAlgorithm:
 
 	@property
 	def molecule(self):
+		"""The target molecule (can not coexist with a hamiltonian property)."""
 		return self._molecule
 
 	@molecule.setter
@@ -63,6 +100,7 @@ class VQEAlgorithm:
 
 	@property
 	def hamiltonian(self):
+		"""The target hamiltonian (can not coexist with a molecule property)."""
 		return self._hamiltonian
 
 	@hamiltonian.setter
@@ -73,6 +111,7 @@ class VQEAlgorithm:
 
 	@property
 	def backend(self):
+		"""The backend (simulator) that the algorithm uses for quantum computation."""
 		return self._backend
 
 	@backend.setter
@@ -81,6 +120,7 @@ class VQEAlgorithm:
 
 	@property
 	def silent(self):
+		"""If True the minimizing process will not print information while it is running."""
 		return self._silent
 
 	@silent.setter
@@ -89,6 +129,7 @@ class VQEAlgorithm:
 
 	@property
 	def repetitions(self):
+		"""The amount of times the algorithm is run during analyzing to get average values."""
 		return self._repetitions
 
 	@repetitions.setter
@@ -97,16 +138,26 @@ class VQEAlgorithm:
 
 	@property
 	def target_value(self):
+		"""
+		The value that you hope the algorithm reaches. If None and the moleucule parameter is not
+		none, the fci method is used to calculate a target value for analyzis.
+		"""
 		return self._target_value
 
 	@target_value.setter
 	def target_value(self, target_value):
 		self._target_value = target_value
 
-	def analyze_circuit(self):
+	def analyze_circuit(self) -> CircuitInfo:
+		"""
+		TODO
+		"""
 		return CircuitInfo(self.circuit)
 
-	def analyze(self):
+	def analyze(self) -> Result:
+		"""
+		TODO
+		"""
 		if not self._molecule and not self._hamiltonian:
 			raise Exception('You have give to a molecule or a hamiltonian.')
 		if self._molecule and self._hamiltonian:
