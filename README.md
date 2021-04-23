@@ -95,4 +95,4 @@ pip install flake8
 To run tests use the command `pytest` in the project root folder.
 
 ### Linting
-To run linter use the command `flake8` in the project root folder.
+To run linter use the command `flake8` in the project root folder. Flake8 does not give an error when using spaces for indentation, but please use tabs.
