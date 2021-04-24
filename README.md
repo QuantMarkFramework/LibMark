@@ -52,7 +52,7 @@ molecule = tq.chemistry.Molecule(
 )
 
 # Make tequila circuit.
-circuit = circuit.make_uccsd_ansatz(trotter_steps=1)
+circuit = molecule.make_uccsd_ansatz(trotter_steps=1)
 
 # Run the benchmark.
 algorithm = qm.VQEAlgorithm(
@@ -60,7 +60,7 @@ algorithm = qm.VQEAlgorithm(
     circuit=circuit,
     optimizer=optimizer,
     backend=backend,
-    repetitions=100
+    repetitions=10
 )
 
 # Analyze the algorithm.
