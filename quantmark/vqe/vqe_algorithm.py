@@ -31,14 +31,15 @@ class VQEAlgorithm:
 			The amount of times the algorithm is run during analyzing to get average values.
 		target_value : float
 			The value that you hope the algorithm reaches. If None and the moleucule parameter
-			is not none, the fci method is used to calculate a target value for analyzis.
+			is not none, the FCI method is used to calculate a target value for analyzis.
 
 	Methods
 	-------
 		analyze_circuit() -> CircuitInfo:
-			TODO
-		analyze(self) -> Result:
-			TODO
+			Analyzes only the circuit without running the algorithm.
+		analyze(self) -> VQEResult:
+			Analyzes the algorithm. This runs the algorithm many times (repetitions) meaning that it
+			can take a long time.
 	"""
 	def __init__(
 		self,
@@ -48,11 +49,31 @@ class VQEAlgorithm:
 		molecule=None,
 		hamiltonian: QubitHamiltonian = None,
 		silent: bool = True,
-		repetitions: int = 100,
+		repetitions: int = 10,
 		target_value: float = None
 	):
 		"""
-		TODO
+		Creates a VQEAlgorithm object.
+
+		Parameters
+		----------
+			circuit : QCircuit
+				The quantum circuit to be used.
+			optimizer : QMOptimizer
+				The optimizer to be used.
+			backend : QMBackend
+				The backend (simulator) to be used to run the quantum part of the algorithm.
+			molecule :
+				The molecule to be inspected (can not be given when hamiltonian is given).
+			hamiltonian : QubitHamiltonian
+				The hamiltonian to be inspected (can not be given when molecule is given).
+			silent : bool
+				If True the minimizing process will not print information while it is running.
+			repetitions : int
+				The amount of times the algorithm should run during analyzing to get average values.
+			target_value : float
+				The value that you hope the algorithm reaches. If None and the moleucule parameter
+				is not none, the FCI method is used to calculate a target value for analyzis.
 		"""
 		if not molecule and not hamiltonian:
 			raise Exception('You have give to a molecule or a hamiltonian.')
@@ -140,7 +161,7 @@ class VQEAlgorithm:
 	def target_value(self):
 		"""
 		The value that you hope the algorithm reaches. If None and the moleucule parameter is not
-		none, the fci method is used to calculate a target value for analyzis.
+		none, the FCi method is used to calculate a target value for analyzis.
 		"""
 		return self._target_value
 
@@ -150,13 +171,23 @@ class VQEAlgorithm:
 
 	def analyze_circuit(self) -> CircuitInfo:
 		"""
-		TODO
+		Analyzes only the circuit without running the algorithm.
+
+		Returns
+		----------
+		A CircuitInfo object that stores information about the circuit.
 		"""
 		return CircuitInfo(self.circuit)
 
 	def analyze(self) -> Result:
 		"""
-		TODO
+		Analyzes the algorithm. This runs the algorithm many times (repetitions) meaning that it
+		can take a long time.
+
+		Returns
+		----------
+		A VQEResult object that stores information about the algorithm and the runs of it. The VQEResult
+		object can be used to get information about the algorithm.
 		"""
 		if not self._molecule and not self._hamiltonian:
 			raise Exception('You have give to a molecule or a hamiltonian.')

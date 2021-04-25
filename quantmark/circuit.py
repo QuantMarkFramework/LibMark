@@ -22,13 +22,61 @@ class GateDict:
 
 
 class CircuitInfo:
+	"""
+	An object returned when analyzing a circuit, that holds information about it.
+
+	Attributes
+	----------
+		gate_depth : int
+			The gate depth of the circuit.
+		qubit_count : int
+			The amount of qubits the circuit needs.
+		gate_count : int
+			The amount of gates the circuit uses.
+		parameter_count : int
+			The amount of parameters on the circuit that have to be optimized.
+
+	Methods
+	----------
+		__str__ : str
+			Prints all attributes (one per line).
+	"""
 	def __init__(self, circuit: QCircuit):
-		self.qubit_count = circuit.n_qubits
-		self.gate_depth = circuit.depth
-		self.gate_count = len(circuit.gates)
-		self.parameter_count = len(list(circuit.make_parameter_map().keys()))
+		"""
+		Creates a CircuitInfo object. This can be used to get information about a circuit,
+
+		Parameters
+		----------
+			circuit : QCircuit
+				The circuit that you want information about.
+		"""
+		self._qubit_count = circuit.n_qubits
+		self._gate_depth = circuit.depth
+		self._gate_count = len(circuit.gates)
+		self._parameter_count = len(list(circuit.make_parameter_map().keys()))
+	
+	@property
+	def gate_depth(self) -> int:
+		"""The gate depth of the circuit."""
+		return self._gate_depth
+
+	@property
+	def qubit_count(self) -> int:
+		"""The amount of qubits the circuit needs."""
+		return self._qubit_count
+
+	@property
+	def gate_count(self) -> int:
+		"""The amount of gates the circuit uses."""
+		return self._gate_count
+
+	@property
+	def parameter_count(self) -> int:
+		"""The amount of parameters on the circuit that have to be optimized."""
+		return self._parameter_count
 
 	def __str__(self):
+		"""Prints all attributes (one per line)."""
 		return (
 			f'QUBIT COUNT:        {self.qubit_count}\n'
 			f'GATE DEPTH:         {self.gate_depth}\n'
