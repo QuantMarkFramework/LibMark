@@ -35,6 +35,7 @@ pip install qulacs # Install qulacs (and or any other quantum backend).
 
 ## Usage
 LibMark is relying stongly on [tequila](https://github.com/aspuru-guzik-group/tequila).
+### Example
 ```python
 import quantmark as qm
 import tequila as tq
@@ -78,6 +79,17 @@ algorithm.backend = new_backend
 
 print(algorithm.analyze())
 ```
+### Information about the result
+* **average_history**: The average values after minimizing iterations.
+* **accuracy_history**: The average accuracy (compared to target_value) after minimizing iterations.
+* **qubit_count**: The amount of qubits the circuit needs.
+* **gate_depth**: The gate depth of the circuit.
+* **gate_count**:The amount of gates the circuit uses.
+* **parameter_count**: The amount of parameters on the circuit that have to be optimized.
+* **average_iterations**: The average amount of iterations that the minimizing process takes.
+* **success_rate**: The fraction of runs that got a result that is accurate to the FCI value with the accuracy '1 / 627.5094740631'.
+
+
 ## Contributing
 You can add an issue or add code with the usual fork(or branch), do, pull request system.
 
