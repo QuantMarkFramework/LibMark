@@ -3,39 +3,32 @@ import tequila as tq
 
 class QMBackend():
 	"""
-	Wrapper that makes sure the same backend is used and checks that it is
-	available.
+	A class that holds information about a backend and can be given as a parameter to an algorithm.
+
+	Attributes
+	----------
+		backend : str
+			The name of the used backend (simulator).
 	"""
 	def __init__(self, backend: str = None):
 		"""
+		Creates a QMBackend object.
+
 		Parameters
 		----------
-		backend: str, optional:
-			Simulator name.
-			Supported simulators: 'qulacs_gpu', 'qulacs','qibo', 'qiskit'
-			'cirq', 'pyquil', 'symbolic'.
+			backend : str, optional
+				The name of the backend (simulator) to be used.
+
+				Supported simulators are 'qulacs_gpu', 'qulacs','qibo', 'qiskit', 'cirq', 'pyquil'
+				and 'symbolic'.
 		"""
 		self.backend = backend
 
 	@property
 	def backend(self):
+		"""The name of the used backend (simulator)."""
 		return self._backend
 
 	@backend.setter
 	def backend(self, backend: str = None):
 		self._backend = tq.pick_backend(backend)
-
-	def to_string(self):
-		"""
-		Returns a string that can be used to recreate the object with the
-		QMBackend.fromString() method.
-		"""
-		return f'QMB;{self.backend}'
-
-	@staticmethod
-	def from_string(object_string: str):
-		"""
-		Used to recreate object from string.
-		"""
-		data = object_string.split(';')
-		return QMBackend(*data[1:])

@@ -17,6 +17,7 @@ def vqe_benchmark(
 	repetitions: int = 100,
 	target_value: int = None
 ) -> Result:
+	"""Please do not use, this is deprecated and will be removed."""
 	if not molecule and not hamiltonian:
 		raise Exception('You have give to a molecule or a hamiltonina')
 	if molecule and hamiltonian:
