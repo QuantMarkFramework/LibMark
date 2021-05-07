@@ -209,7 +209,7 @@ class VQEResult:
 	def molecule(self):
 		"""The target molecule."""
 		return self._molecule
-	
+
 	@property
 	def hamiltonian(self):
 		"""The target hamiltonian"""
