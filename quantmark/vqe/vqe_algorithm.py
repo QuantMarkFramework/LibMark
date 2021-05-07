@@ -231,6 +231,7 @@ class VQEAlgorithm:
 			self._backend,
 			results,
 			molecule=self._molecule,
+			hamiltonian=self._hamiltonian,
 			target_value=self._target_value,
 			max_iterations=self._max_iterations
 		)
