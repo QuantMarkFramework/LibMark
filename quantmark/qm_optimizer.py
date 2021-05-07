@@ -12,7 +12,14 @@ class QMOptimizer:
 		minimize(objective, backend=None, silent=True):
 			Runs the optimizer on a given objective.
 	"""
-	def __init__(self, module: str = "scipy", method: str = "BFGS", *args, **kwarks):
+	def __init__(
+		self,
+		module: str = "scipy",
+		method: str = "BFGS",
+		maxiter: int = 100,
+		*args,
+		**kwarks
+	):
 		"""
 		Creates a QMOptimizer object.
 
@@ -24,6 +31,8 @@ class QMOptimizer:
 				Supported modules are 'scipy', 'gd', 'gpyopt' and 'phoenics'.
 			method : str
 				The method to be used from the module.
+			maxiter : int
+				The maximum amount of iterations, before the optimizer is stopped.
 			*args :
 				Additional arguments to be passed to the module.
 			**kwarks :
@@ -44,10 +53,17 @@ class QMOptimizer:
 				self._minimize = minimize
 		self._module = module
 		self._method = method
+		self.maxiter = maxiter
 		self._args = args
 		self._kwarks = kwarks
 
-	def minimize(self, objective, backend: str = None, silent: bool = True):
+	def minimize(
+		self,
+		objective,
+		backend: str = None,
+		silent: bool = True,
+		maxiter: int = None,
+	):
 		"""
 			Runs the optimizer on a given objective.
 
@@ -59,11 +75,15 @@ class QMOptimizer:
 				The backend (simulator) to be used.
 			silent : bool
 				If True the minimizing process will not print information while it is running.
+			maxiter : int
+				The maximum amount of iterations, before the optimizer is stopped.
 
 		Returns
 		----------
 		The result from the minimizing process.
 		"""
+		if not maxiter:
+			maxiter = self.maxiter
 		return self._minimize(
 			objective=objective,
 			method=self._method,
@@ -74,6 +94,7 @@ class QMOptimizer:
 			backend=backend,
 			silent=silent,
 			tol=1.e-13,
+			maxiter=maxiter,
 			*self._args,
 			**self._kwarks
 		)

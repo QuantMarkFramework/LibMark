@@ -57,9 +57,10 @@ class VQEResult:
 		optimizer: QMOptimizer,
 		backend: QMBackend,
 		results: list,
+		max_iterations: int,
 		molecule=None,
 		hamiltonian=None,
-		target_value: float = None
+		target_value: float = None,
 	):
 		"""
 		Creates a VQEResult object. This should not be used anywhere else than in the
@@ -76,6 +77,9 @@ class VQEResult:
 			results : list
 				Information about the runs of the algorithm. (Contains results from the minimize
 				method)
+			max_iterations : int
+				The maximum iterations for the minimizing process. After this the algorithm is
+				forced to stop.
 			molecule :
 				The target molecule (can not coexist with a hamiltonian property).
 			hamiltonian :
@@ -92,6 +96,7 @@ class VQEResult:
 		self._hamiltonian = hamiltonian
 		self._target_value = target_value
 		self._circuit_info = CircuitInfo(circuit)
+		self._user_set_max_iterations = max_iterations
 
 	@property
 	@cached
@@ -202,7 +207,11 @@ class VQEResult:
 		success_rate = ''
 		if self.success_rate is not None:
 			success_rate = f'SUCCESS RATE:       {self.success_rate}\n'
+		warning = ""
+		if self.max_iterations >= self._user_set_max_iterations:
+			warning += "WARNING: Max iteration was reached!\n"
 		return (
+			f'{warning}'
 			f'AVERAGE HISTORY:    {self.average_history}\n'
 			f'{average}'
 			f'QUBIT COUNT:        {self.qubit_count}\n'

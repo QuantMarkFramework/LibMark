@@ -32,7 +32,9 @@ class VQEAlgorithm:
 		target_value : float
 			The value that you hope the algorithm reaches. If None and the moleucule parameter
 			is not none, the FCI method is used to calculate a target value for analyzis.
-
+		max_iterations : int
+			The maximum iterations for the minimizing process. After this the algorithm is
+			forced to stop.
 	Methods
 	-------
 		analyze_circuit() -> CircuitInfo:
@@ -50,7 +52,8 @@ class VQEAlgorithm:
 		hamiltonian: QubitHamiltonian = None,
 		silent: bool = True,
 		repetitions: int = 10,
-		target_value: float = None
+		target_value: float = None,
+		max_iterations: int = 100
 	):
 		"""
 		Creates a VQEAlgorithm object.
@@ -74,6 +77,9 @@ class VQEAlgorithm:
 			target_value : float
 				The value that you hope the algorithm reaches. If None and the moleucule parameter
 				is not none, the FCI method is used to calculate a target value for analyzis.
+			max_iterations : int
+				The maximum iterations for the minimizing process. After this the algorithm is
+				forced to stop.
 		"""
 		if not molecule and not hamiltonian:
 			raise Exception('You have give to a molecule or a hamiltonian.')
@@ -87,6 +93,7 @@ class VQEAlgorithm:
 		self._silent = silent
 		self._repetitions = repetitions
 		self._target_value = target_value
+		self._max_iterations = max_iterations
 
 	@property
 	def circuit(self):
@@ -169,6 +176,18 @@ class VQEAlgorithm:
 	def target_value(self, target_value):
 		self._target_value = target_value
 
+	@property
+	def max_itertaions(self):
+		"""
+		The maximum iterations for the minimizing process. After this the algorithm is forced to
+		stop.
+		"""
+		return self.max_itertaions
+
+	@target_value.setter
+	def max_iterations(self, max_iterations):
+		self._max_iterations = max_iterations
+
 	def analyze_circuit(self) -> CircuitInfo:
 		"""
 		Analyzes only the circuit without running the algorithm.
@@ -203,12 +222,15 @@ class VQEAlgorithm:
 			results[i] = self._optimizer.minimize(
 				objective=objective,
 				backend=self._backend.backend,
-				silent=self._silent)
+				silent=self._silent,
+				maxiter=self._max_iterations
+			)
 		return Result(
 			self._circuit,
 			self._optimizer,
 			self._backend,
 			results,
 			molecule=self._molecule,
-			target_value=self._target_value
+			target_value=self._target_value,
+			max_iterations=self._max_iterations
 		)
