@@ -45,6 +45,10 @@ class VQEResult:
 		target_value : float
 			The value that you hope the algorithm reaches. If this is None and the moleucule
 			parameter is not none, the FCI method is used to calculate a target value for analysis.
+		molecule :
+			The target molecule.
+		hamiltonian :
+			The target hamiltonian.
 
 	Methods
 	----------
@@ -200,6 +204,16 @@ class VQEResult:
 	def results(self) -> list:
 		"""A list with the original results from the minimizing method."""
 		return self._results
+
+	@property
+	def molecule(self):
+		"""The target molecule."""
+		return self._molecule
+
+	@property
+	def hamiltonian(self):
+		"""The target hamiltonian"""
+		return self._hamiltonian
 
 	def __str__(self):
 		"""Prints a list of some interesting attributes (one per line)."""
