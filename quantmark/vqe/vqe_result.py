@@ -49,6 +49,12 @@ class VQEResult:
 			The target molecule.
 		hamiltonian :
 			The target hamiltonian.
+		backend : QMBackend
+			The backend that was used.
+		optimizer : QMOptimizer
+			The optimizer that was used.
+		iteration limit : int
+			After how many iterations the minimizer is stopped.
 
 	Methods
 	----------
@@ -214,6 +220,21 @@ class VQEResult:
 	def hamiltonian(self):
 		"""The target hamiltonian"""
 		return self._hamiltonian
+
+	@property
+	def backend(self):
+		"""The backend that was used."""
+		return self._backend
+
+	@property
+	def optimizer(self):
+		"""The optimizer that was used."""
+		return self._optimizer
+
+	@property
+	def iteration_limit(self):
+		"""After how many iterations the minimizer is stopped."""
+		return self._user_set_max_iterations
 
 	def __str__(self):
 		"""Prints a list of some interesting attributes (one per line)."""

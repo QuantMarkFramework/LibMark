@@ -57,6 +57,14 @@ class QMOptimizer:
 		self._args = args
 		self._kwarks = kwarks
 
+	@property
+	def module(self):
+		return self._module
+
+	@property
+	def method(self):
+		return self._method
+
 	def minimize(
 		self,
 		objective,
