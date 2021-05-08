@@ -1,5 +1,6 @@
 import tequila as tq
 
+from deprecated import deprecated
 from tequila.circuit import QCircuit as Circuit
 from tequila import QubitHamiltonian
 from quantmark.qm_backend import QMBackend as Backend
@@ -7,6 +8,7 @@ from quantmark.qm_optimizer import QMOptimizer as Optimizer
 from quantmark.vqe.vqe_result import VQEResult as Result
 
 
+@deprecated(reason="Use the VQEAlgorithm class with the analyze method instead.", action='always')
 def vqe_benchmark(
 	circuit: Circuit,
 	optimizer: Optimizer = Optimizer(),
@@ -17,7 +19,7 @@ def vqe_benchmark(
 	repetitions: int = 100,
 	target_value: int = None
 ) -> Result:
-	"""Please do not use, this is deprecated and will be removed."""
+	"""Deprecated. Use the VQEAlgorithm class with the analyze method instead."""
 	if not molecule and not hamiltonian:
 		raise Exception('You have give to a molecule or a hamiltonina')
 	if molecule and hamiltonian:
@@ -29,6 +31,18 @@ def vqe_benchmark(
 
 	results = [None] * repetitions
 	for i in range(repetitions):
-		results[i] = optimizer.minimize(objective=objective, backend=backend.backend, silent=silent)
-	test = Result(circuit, optimizer, backend, results, molecule=molecule, target_value=target_value)
+		results[i] = optimizer.minimize(
+			objective=objective,
+			backend=backend.backend,
+			silent=silent
+		)
+	test = Result(
+		circuit,
+		optimizer,
+		backend,
+		results,
+		molecule=molecule,
+		target_value=target_value,
+		max_iterations=100
+	)
 	return test
