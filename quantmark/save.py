@@ -58,7 +58,7 @@ def geometry_to_xyz(geometry: list) -> str:
 	return "\n".join(strings)
 
 
-def create_data_row(result: VQEResult) -> typing.Lits[str]:
+def create_data_row(result: VQEResult) -> typing.List[str]:
 	"""
 	Creates a fata row with information about the reusl to be saved in a csv file.
 
