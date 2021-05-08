@@ -7,6 +7,18 @@ from quantmark.vqe.vqe_result import VQEResult
 
 
 def create_molecular_formula(atoms: typing.List[str]) -> str:
+	"""
+	Creates a molecular formula out of a list of moleules:
+
+	Parameters
+	----------
+		atoms : List[str]
+			A list of atoms. Example: ['H', 'O', 'H']
+
+	Returns
+	----------
+	A molecular formula. Example: 'H2O'
+	"""
 	dictionary = {}
 	for atom in atoms:
 		if atom not in dictionary:
@@ -22,6 +34,19 @@ def create_molecular_formula(atoms: typing.List[str]) -> str:
 
 
 def geometry_to_xyz(geometry: list) -> str:
+	"""
+	Creates a string with the .xyz format from a list that represents the geometry
+
+	Parameters
+	----------
+		geometry : list
+			A list returned representing the geometry. Example:
+			[('H', (0.0, 0.0, 0.0)), ('H', (0.0, 0.0, 1.6))]
+
+	Returns
+	----------
+	A string with the .xyz format. Example: '2\n\nH  0.0  0.0  0.0\nH  0.0  0.0  0.6'
+	"""
 	strings = []
 	strings.append(str(len(geometry)) + "\n")
 	for atom in geometry:
@@ -33,7 +58,20 @@ def geometry_to_xyz(geometry: list) -> str:
 	return "\n".join(strings)
 
 
-def create_data_row(result):
+def create_data_row(result: VQEResult) -> typing.Lits[str]:
+	"""
+	Creates a fata row with information about the reusl to be saved in a csv file.
+
+	Parameters
+	----------
+		result : VQEResult
+			The result class given by VQEAlgorithm.analyze().
+
+	Returns
+	----------
+	A list with Qubit Count, Gate Depth, Gate Count, Parameter Count, Average Iterations,
+	Success Rate, Molecular Formula, Basis Set and Transformation.
+	"""
 	return [
 		result.qubit_count,
 		result.gate_depth,
@@ -47,7 +85,21 @@ def create_data_row(result):
 	]
 
 
-def save(result: VQEResult, algorithm_name: str = "Undefined") -> None:
+def save(result: VQEResult, algorithm_name: str = "undefined") -> None:
+	"""
+	Saves data about the algorithm.
+
+	One 'experiments.csv' contains data about all experiments. Additional information can be found
+	in a folder corresponding to the algorithm name.
+
+	Parameters
+	----------
+		result : VQEResult
+			The result class given by VQEAlgorithm.analyze() that contains the data you want to save.
+		algorithm_name: str
+			A name that is saved as the name of the algorithm. All the experiments with the same
+			algorithm name are saaved in the same folder.
+	"""
 	molecular_formula = create_molecular_formula(result.molecule.molecule.atoms)
 	data_row = create_data_row(result)
 
