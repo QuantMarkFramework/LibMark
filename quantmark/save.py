@@ -3,6 +3,7 @@ import csv
 import typing
 import time
 import datetime
+
 from quantmark.vqe.vqe_result import VQEResult
 
 
@@ -70,7 +71,8 @@ def create_data_row(result: VQEResult) -> typing.List[str]:
 	Returns
 	----------
 	A list with Qubit Count, Gate Depth, Gate Count, Parameter Count, Average Iterations,
-	Success Rate, Molecular Formula, Basis Set and Transformation.
+	Success Rate, Molecular Formula, Basis Set, Transformation, Optimizer Module, Optimizer Method,
+	Backend and Iteration Limit.
 	"""
 	return [
 		result.qubit_count,
@@ -81,7 +83,11 @@ def create_data_row(result: VQEResult) -> typing.List[str]:
 		result.success_rate,
 		create_molecular_formula(result.molecule.molecule.atoms),
 		result.molecule.molecule.basis,
-		result.molecule.transformation._trafo.__name__
+		result.molecule.transformation._trafo.__name__,
+		result.optimizer.module,
+		result.optimizer.method,
+		result.backend.backend,
+		result.iteration_limit
 	]
 
 
@@ -123,7 +129,11 @@ def save(result: VQEResult, algorithm_name: str = "undefined") -> None:
 			"Success Rate",
 			"Molecular Formula",
 			"Basis Set",
-			"Transformation"
+			"Transformation",
+			"Optimizer Module",
+			"Optimizer Method",
+			"Backend",
+			"Iteration Limit"
 		])
 		writer.writerow(data_row)
 
@@ -152,6 +162,10 @@ def save(result: VQEResult, algorithm_name: str = "undefined") -> None:
 				"Molecular Formula",
 				"Basis Set",
 				"Transformation",
+				"Optimizer Module",
+				"Optimizer Method",
+				"Backend",
+				"Iteration Limit",
 				"Algorithm Name",
 				"Experiment Name",
 			])
