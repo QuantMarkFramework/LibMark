@@ -1,0 +1,5 @@
+setuptools
+tequila-basic==1.0.0
+Deprecated
+flake8
+pytest
