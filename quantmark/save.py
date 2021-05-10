@@ -140,9 +140,12 @@ def save(result: VQEResult, algorithm_name: str = "undefined") -> None:
 	iterations_path = os.path.join(algorithm_name, experiment_name, 'iterations.csv')
 	with open(iterations_path, 'x', newline='') as file:
 		writer = csv.writer(file)
-		writer.writerow([f'Iteration {i}' for i in range(1, result.max_iterations + 1)])
+		columns = result.max_iterations
+		writer.writerow([f'Iteration {i}' for i in range(1, columns + 1)])
 		for res in result.results:
 			history = res.history.energies.copy()
+			while len(history) < columns:
+				history.append(None)
 			writer.writerow(history)
 
 	geometry_path = os.path.join(algorithm_name, experiment_name, 'geometry.xyz')
@@ -175,5 +178,5 @@ def save(result: VQEResult, algorithm_name: str = "undefined") -> None:
 		full_data_row = data_row.copy()
 		full_data_row.append(algorithm_name)
 		full_data_row.append(experiment_name)
-		writer.writerow(full_data_row)
+		writer.writerow(full_data_row,)
 	return
