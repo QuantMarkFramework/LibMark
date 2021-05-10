@@ -2,7 +2,7 @@
 The QuantMark library can be used to analyze VQE-algorithms. The functionalities of the library buildon top of [tequila](https://github.com/aspuru-guzik-group/tequila).
 
 ## Installation
-> Currently this library supports only python 3.7
+> Currently this library supports only python 3.7, 3.8 and 3.9
 
 Before installing the library it is recommended to install psi4 if you want to use molecules. It is recommended to use conda for easy installation (
 [instructions](#Setting-up-conda-environment)).
@@ -20,11 +20,13 @@ pip install qulacs
 
 ### Setting up conda environment
 ```shell
-conda create -n envname python=3.7 # Create environment.
+conda create -n envname python=3.7 # Create environment. (optional python=3.8 or python=3.9)
 
 conda activate envname # Activate to environment.
 
-conda install psi4 -c psi4 # Install psi4.
+# install psi4
+conda install -c psi4 psi4 # for python 3.7
+conda install -c psi4/label/dev psi4 # for python 3.8 or 3.9
 
 # Clone LibMark and move into the created folder.
 
