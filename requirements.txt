@@ -1,4 +1,3 @@
 setuptools
 tequila-basic==1.0.0
-flake8
 Deprecated
