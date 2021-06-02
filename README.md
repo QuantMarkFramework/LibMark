@@ -7,7 +7,7 @@ Make sure that the package is somewhere in your PYTHONPATH, then after using
 ```
 from QuantMark import push_results
 ```
-Now data can be sent to [WebMark2](https://github.com/quantum-ohtu/WebMark2), using
+data can be sent to [WebMark2](https://github.com/quantum-ohtu/WebMark2), using
 ```
 push_results(data)
 ```
