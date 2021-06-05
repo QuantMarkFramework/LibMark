@@ -9,6 +9,6 @@ from QuantMark import push_results
 ```
 data can be sent to [WebMark2](https://github.com/quantum-ohtu/WebMark2), using
 ```
-push_results(data)
+push_results(data, hamiltonian, ansatz, optimizer)
 ```
 Currently all sorts of data is accepted without restrictions.
