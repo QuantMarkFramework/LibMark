@@ -24,4 +24,4 @@ qresult.push()
 
 Example usage:
 
-![image](https://github.com/quantum-ohtu/LibMark2/blob/main/images/generic_vqe.png)
+![image](https://github.com/quantum-ohtu/LibMark2/blob/main/images/vqe.png)
