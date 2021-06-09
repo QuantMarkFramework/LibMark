@@ -3,7 +3,7 @@ import json
 
 # Use this (or wherever your local WebMark2 is running) while developing
 url = 'http://0.0.0.0:8000/api/'
-# url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
+#url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 
 class Qresult:
@@ -50,8 +50,8 @@ class Qresult:
         ansatz : tequila.circuit.circuit.QCircuit
             object returned by molecule.make_uccsd_ansatz()
         """
-        # FIXME calling str(*something*) to make the data JSON serializable is lazy,
-        # need to find a more elegant way to do this.
+        # FIXME calling str(*something*) to make the data JSON serializable
+        # is lazy, need to find a more elegant way to do this.
         self.energies.append(result.energy)
         self.variables.append(str(result.variables))
         self.histories.append(str(result.history))
@@ -60,16 +60,20 @@ class Qresult:
         self.hamiltonian.append(str(hamiltonian))
         self.ansatz.append(str(ansatz))
 
+    def get_result_dict(self):
+        result = {"energies": self.energies,
+                  "variables": self.variables,
+                  "histories": self.histories,
+                  "scipy_results": self.scipy_results,
+                  "hamiltonian": self.hamiltonian,
+                  "ansatz": self.ansatz,
+                  "optimizer": self.optimizer,
+                  "molecule": self.molecules}
+        return result
+
     def push(self):
         """Send Qresult to server"""
-        result = {"energies": self.energies,
-                       "variables": self.variables,
-                       "histories": self.histories,
-                       "scipy_results": self.scipy_results,
-                       "hamiltonian": self.hamiltonian,
-                       "ansatz": self.ansatz,
-                       "optimizer": self.optimizer,
-                       "molecule": self.molecules}
+        result = self.get_result_dict()
         response = requests.post(url, json=json.dumps(result, indent=4))
         return response
 
