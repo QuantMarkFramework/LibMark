@@ -3,7 +3,7 @@ import json
 
 # Use this (or wherever your local WebMark2 is running) while developing
 url = 'http://0.0.0.0:8000/api/'
-#url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
+# url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 
 class Qresult:
