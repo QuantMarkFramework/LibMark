@@ -5,7 +5,7 @@ A simple python package for sending VQE run results to WebMark2
 
 Make sure that the package is somewhere in your PYTHONPATH, then after using
 ```
-from QuantMark import Qresult
+from LibMark2.quantmark import Qresult
 
 qresult = Qresult(optimizer)
 ```
