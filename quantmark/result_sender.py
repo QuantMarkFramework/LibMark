@@ -1,5 +1,6 @@
 import requests
 import json
+import tequila
 
 # Use this (or wherever your local WebMark2 is running) while developing
 url = 'http://0.0.0.0:8000/api/'
@@ -35,6 +36,7 @@ class Qresult:
         self.hamiltonian = []
         self.ansatz = []
         self.optimizer = optimizer
+        self.tqversion = tequila.__version__
 
     def add_run(self, result, molecule, hamiltonian, ansatz):
         """Add VQE run to the QResult
@@ -68,7 +70,9 @@ class Qresult:
                   "hamiltonian": self.hamiltonian,
                   "ansatz": self.ansatz,
                   "optimizer": self.optimizer,
-                  "molecule": self.molecules}
+                  "molecule": self.molecules,
+                  "tqversion": self.tqversion,
+                  }
         return result
 
     def push(self):
@@ -82,4 +86,5 @@ class Qresult:
             {len(self.hamiltonian)} hamiltonians,
             {len(self.ansatz)} ansatz,
             {len(self.molecules)} molecules,
-            with optimizer: {self.optimizer}"""
+            with optimizer: {self.optimizer},
+            Tequila: {self.tqversion}"""
