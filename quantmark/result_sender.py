@@ -43,7 +43,7 @@ class Qresult:
         h_dict = {}
         h_dict['history_energies'] = history.energies
         h_dict['gradients'] = history.gradients
-        h_dict['angles'] = history.angles
+        h_dict['angles'] = str(history.angles)
         h_dict['energies_calls'] = history.energies_calls
         h_dict['gradients_calls'] = history.gradients_calls
         h_dict['angles_calls'] = history.angles_calls
