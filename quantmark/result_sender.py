@@ -37,6 +37,29 @@ class Qresult:
         self.ansatz = []
         self.optimizer = optimizer
         self.tqversion = tequila.__version__
+        self.distances = []
+
+    def make_history_dict(self, history):
+        h_dict = {}
+        h_dict['history_energies'] = history.energies
+        h_dict['gradients'] = history.gradients
+        h_dict['angles'] = history.angles
+        h_dict['energies_calls'] = history.energies_calls
+        h_dict['gradients_calls'] = history.gradients_calls
+        h_dict['angles_calls'] = history.angles_calls
+        return h_dict
+
+    def make_scipy_result_dict(self, scipy_result):
+        sr_dict = {}
+        sr_dict['final_simplex'] = str(scipy_result.final_simplex)
+        sr_dict['fun'] = scipy_result.fun
+        sr_dict['message'] = str(scipy_result.message)
+        sr_dict['nfev'] = scipy_result.nfev
+        sr_dict['nit'] = scipy_result.nit
+        sr_dict['status'] = scipy_result.status
+        sr_dict['success'] = str(scipy_result.success)
+        sr_dict['x'] = str(scipy_result.x)
+        return sr_dict
 
     def add_run(self, result, molecule, hamiltonian, ansatz):
         """Add VQE run to the QResult
@@ -55,12 +78,15 @@ class Qresult:
         # FIXME calling str(*something*) to make the data JSON serializable
         # is lazy, need to find a more elegant way to do this.
         self.energies.append(result.energy)
-        self.variables.append(str(result.variables))
-        self.histories.append(str(result.history))
-        self.scipy_results.append(str(result.scipy_result))
+        self.variables.append(str(result.variables).replace('\n', ' '))
+        self.histories.append(str(self.make_history_dict(result.history)))
+        self.scipy_results.append(
+            str(self.make_scipy_result_dict(result.scipy_result))
+            )
         self.molecules.append(str(molecule))
         self.hamiltonian.append(str(hamiltonian))
         self.ansatz.append(str(ansatz))
+        self.distances.append(molecule.parameters.get_geometry()[-1][-1][-1])
 
     def get_result_dict(self):
         result = {"energies": self.energies,
@@ -72,6 +98,7 @@ class Qresult:
                   "optimizer": self.optimizer,
                   "molecule": self.molecules,
                   "tqversion": self.tqversion,
+                  "distances": self.distances
                   }
         return result
 
