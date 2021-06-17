@@ -144,3 +144,7 @@ cython_debug/
 migrations/
 
 timer.dat
+
+# Psi4/Tequila stuff
+molecule*
+psi.*

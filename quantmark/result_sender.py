@@ -4,7 +4,7 @@ import tequila
 
 # Use this (or wherever your local WebMark2 is running) while developing
 url = 'http://0.0.0.0:8000/api/'
-# url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
+#url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 
 class Qresult:
@@ -19,16 +19,25 @@ class Qresult:
         self.ansatz = []
         self.optimizer = optimizer
         self.tqversion = tequila.__version__
+        self.basis_set = None
+        self.transformation = None
         self.distances = []
-
-    def make_history_dict(self, history):
-        return history.__dict__
 
     def make_scipy_result_dict(self, scipy_result):
         scipy_result_dict = {}
         for key in scipy_result.keys():
             scipy_result_dict[key] = str(scipy_result.get(key))
         return scipy_result_dict
+
+    def get_transformation(self, molecule):
+        # Parsing the transformation name is a bit of a hassle
+        # try-except so that it doesn't cause the whole collection to fail
+        try:
+            t = str(molecule.transformation)
+            t_name = t.split('function')[1].split('at')[0].strip()
+            return t_name
+        except Exception:
+            return ' '
 
     def add_run(self, result, molecule, hamiltonian, ansatz):
         """Add VQE run to the QResult
@@ -56,6 +65,8 @@ class Qresult:
         self.hamiltonian.append(str(hamiltonian))
         self.ansatz.append(str(ansatz))
         self.distances.append(molecule.parameters.get_geometry()[-1][-1][-1])
+        self.basis_set = molecule.parameters.basis_set
+        self.transformation = self.get_transformation(molecule)
 
     def get_result_dict(self):
         result = {"energies": self.energies,
@@ -67,7 +78,9 @@ class Qresult:
                   "optimizer": self.optimizer,
                   "molecule": self.molecules,
                   "tqversion": self.tqversion,
-                  "distances": self.distances
+                  "distances": self.distances,
+                  "basis_set": self.basis_set,
+                  "transformation": self.transformation
                   }
         return result
 
