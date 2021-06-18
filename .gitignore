@@ -148,3 +148,6 @@ timer.dat
 # Psi4/Tequila stuff
 molecule*
 psi.*
+
+# etc.
+QRE 2021 Demo.py
