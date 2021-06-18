@@ -3,8 +3,8 @@ import json
 import tequila
 
 # Use this (or wherever your local WebMark2 is running) while developing
-#url = 'http://0.0.0.0:8000/api/'
-url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
+url = 'http://0.0.0.0:8000/api/'
+#url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 
 class Qresult:
@@ -37,6 +37,8 @@ class Qresult:
             t_name = t.split('function')[1].split('at')[0].strip()
             return t_name
         except Exception:
+            if len(t.split()) == 1:
+                return t
             return ' '
 
     def add_run(self, result, molecule, hamiltonian, ansatz):
