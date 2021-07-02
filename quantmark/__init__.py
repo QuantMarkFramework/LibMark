@@ -1,1 +1,1 @@
-from .result_sender import Results
+from .result_sender import QuantMarkResult

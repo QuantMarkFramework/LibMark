@@ -7,7 +7,7 @@ import tequila
 url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 
-class Results:
+class QuantMarkResult:
 
     def __init__(self, optimizer):
         self.scipy_results = []
@@ -91,6 +91,17 @@ class Results:
         result = self.get_result_dict()
         response = requests.post(url, json=json.dumps(result, indent=4))
         return response
+
+    def save(self, file=""):
+        """Save data locally for testing and verification"""
+        if not file:
+            from datetime import datetime
+            now = datetime.now()
+            file = self.optimizer + " " + str(now) + ".json"     # There is a space in 'now' already
+        output = open(file, 'w')
+        result = self.get_result_dict()
+        output.write(json.dumps(result, indent=4))
+        return
 
     def __str__(self):
         return f"""Collected: {len(self.energies)} results,
