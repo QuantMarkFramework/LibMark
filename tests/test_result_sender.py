@@ -1,18 +1,18 @@
 import unittest
-from quantmark.result_sender import Qresult
+from quantmark.result_sender import Results
 import random
 
 
 class TestResultSender(unittest.TestCase):
 
     def mock_vqe(self, molecules, hamiltonian, ansatz, optimizer):
-        qresult = Qresult(optimizer)
+        results = Results(optimizer)
         for molecule in molecules:
             H = hamiltonian(molecule)
             U = ansatz(molecule)
             result = mockResult()
-            qresult.add_run(result, molecule, H, U)
-        return qresult
+            results.add_run(result, molecule, H, U)
+        return results
 
     def mock_hamiltonian_function(self, molecule):
         return f'hamiltonian_from_{molecule}'
@@ -26,16 +26,16 @@ class TestResultSender(unittest.TestCase):
         mol = [f'mol{i}' for i in range(n)]
         h_func = self.mock_hamiltonian_function
         ansatz_func = self.mock_ansatz_function
-        qresult = self.mock_vqe(mol, h_func, ansatz_func, 'Nelder-Mead')
-        print(qresult.get_result_dict())
+        results = self.mock_vqe(mol, h_func, ansatz_func, 'Nelder-Mead')
+        print(results.get_result_dict())
 
-        self.assertEqual(n, len(qresult.energies))
-        self.assertEqual(n, len(qresult.hamiltonian))
-        self.assertEqual(n, len(qresult.molecules))
+        self.assertEqual(n, len(results.energies))
+        self.assertEqual(n, len(results.hamiltonian))
+        self.assertEqual(n, len(results.molecules))
 
     def test_optimizer_is_correct(self):
-        qresult = Qresult('Nelder-Mead')
-        self.assertEqual(qresult.optimizer, 'Nelder-Mead')
+        results = Results('Nelder-Mead')
+        self.assertEqual(results.optimizer, 'Nelder-Mead')
 
 
 class mockResult:
