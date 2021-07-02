@@ -1,1 +1,1 @@
-from .result_sender import Qresult
+from .result_sender import Results
