@@ -7,7 +7,7 @@ import tequila
 url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 
-class Qresult:
+class Results:
 
     def __init__(self, optimizer):
         self.scipy_results = []
@@ -42,7 +42,7 @@ class Qresult:
             return ' '
 
     def add_run(self, result, molecule, hamiltonian, ansatz):
-        """Add VQE run to the QResult
+        """Add VQE run to the Results
 
         Parameters
         ----------
@@ -87,7 +87,7 @@ class Qresult:
         return result
 
     def push(self):
-        """Send Qresult to server"""
+        """Send Results to server"""
         result = self.get_result_dict()
         response = requests.post(url, json=json.dumps(result, indent=4))
         return response
