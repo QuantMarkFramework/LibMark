@@ -1,4 +1,4 @@
-from result import QuantMarkResult
+from .result import QuantMarkResult
 
 
 class QuantMarkResultNesterov(QuantMarkResult):

@@ -1,5 +1,5 @@
-from result_scipy import QuantMarkResultScipy
-from result_nesterov import QuantMarkResultNesterov
+from .result_scipy import QuantMarkResultScipy
+from .result_nesterov import QuantMarkResultNesterov
 
 scipy_optimizers = ["NELDER-MEAD", "BFGS", "L-BFGS-B", "COBYLA"]
 
