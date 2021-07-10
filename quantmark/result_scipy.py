@@ -1,4 +1,4 @@
-from .result import QuantMarkResult
+from LibMark2.quantmark.result import QuantMarkResult
 
 
 class QuantMarkResultScipy(QuantMarkResult):
@@ -41,7 +41,7 @@ class QuantMarkResultScipy(QuantMarkResult):
         return super().push()
 
     def save(self, file=""):
-        return super().save(file="")
+        return super().save(file)
 
     def __str__(self):
         return super().__str__()
