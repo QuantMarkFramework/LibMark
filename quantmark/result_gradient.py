@@ -1,7 +1,7 @@
-from .result import QuantMarkResult
+from LibMark2.quantmark.result import QuantMarkResult
 
 
-class QuantMarkResultNesterov(QuantMarkResult):
+class QuantMarkResultGradient(QuantMarkResult):
     def __init__(self, optimizer):
         super().__init__(optimizer)
         self.moments = []
@@ -34,7 +34,7 @@ class QuantMarkResultNesterov(QuantMarkResult):
         return super().push()
 
     def save(self, file=""):
-        return super.save(file="")
+        return super().save(file)
 
     def __str__(self):
         return super().__str__()

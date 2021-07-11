@@ -3,8 +3,9 @@ import tequila
 import requests
 import json
 
+
 # Use this (or wherever your local WebMark2 is running) while developing
-# url = 'http://0.0.0.0:8000/api/'
+# url = 'http://localhost:8000/api/'
 url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 
@@ -74,7 +75,7 @@ class QuantMarkResult(ABC):
         if not file:
             from datetime import datetime
             now = datetime.now()
-            file = self.optimizer + " " + str(now) + ".json"     # There is a space in 'now' already
+            file = self.optimizer + " " + self.transformation + " " + str(now) + ".json"
         output = open(file, 'w')
         result = self.get_result_dict()
         output.write(json.dumps(result, indent=4))
