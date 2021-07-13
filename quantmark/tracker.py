@@ -1,5 +1,5 @@
-from LibMark2.quantmark.result_scipy import QuantMarkResultScipy
-from LibMark2.quantmark.result_gradient import QuantMarkResultGradient
+from .result_scipy import QuantMarkResultScipy
+from .result_gradient import QuantMarkResultGradient
 
 scipy_optimizers = ["NELDER-MEAD", "BFGS", "L-BFGS-B", "COBYLA"]
 gradient_optimizers = [

@@ -1,4 +1,4 @@
-from LibMark2.quantmark.result import QuantMarkResult
+from .result import QuantMarkResult
 
 
 class QuantMarkResultGradient(QuantMarkResult):
@@ -22,6 +22,7 @@ class QuantMarkResultGradient(QuantMarkResult):
                   "hamiltonian": self.hamiltonian,
                   "ansatz": self.ansatz,
                   "optimizer": self.optimizer,
+                  "qubits": self.qubits,
                   "molecule": self.molecules,
                   "tqversion": self.tqversion,
                   "distances": self.distances,

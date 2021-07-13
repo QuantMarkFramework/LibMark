@@ -16,6 +16,7 @@ class QuantMarkResult(ABC):
         self.histories = []
         self.molecules = []
         self.hamiltonian = []
+        self.qubits = []
         self.ansatz = []
         self.optimizer = optimizer
         self.tqversion = tequila.__version__
@@ -54,6 +55,7 @@ class QuantMarkResult(ABC):
         self.histories.append(str(run.history.__dict__))
         self.molecules.append(str(molecule))
         self.hamiltonian.append(str(hamiltonian))
+        self.qubits.append(len(hamiltonian.qubits)) # the number of qubits
         self.ansatz.append(str(ansatz))
         self.distances.append(molecule.parameters.get_geometry()[-1][-1][-1])
         self.basis_set = molecule.parameters.basis_set
