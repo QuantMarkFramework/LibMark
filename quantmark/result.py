@@ -5,8 +5,8 @@ import json
 
 
 # Use this (or wherever your local WebMark2 is running) while developing
-# url = 'http://localhost:8000/api/'
-url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
+url = 'http://localhost:8000/api/'
+# url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 
 class QuantMarkResult(ABC):
@@ -17,6 +17,7 @@ class QuantMarkResult(ABC):
         self.molecules = []
         self.hamiltonian = []
         self.qubits = []
+        self.depth = []
         self.ansatz = []
         self.optimizer = optimizer
         self.tqversion = tequila.__version__
@@ -56,6 +57,7 @@ class QuantMarkResult(ABC):
         self.molecules.append(str(molecule))
         self.hamiltonian.append(str(hamiltonian))
         self.qubits.append(len(hamiltonian.qubits)) # the number of qubits
+        self.depth.append(ansatz.depth) # Ansatz gate depth
         self.ansatz.append(str(ansatz))
         self.distances.append(molecule.parameters.get_geometry()[-1][-1][-1])
         self.basis_set = molecule.parameters.basis_set

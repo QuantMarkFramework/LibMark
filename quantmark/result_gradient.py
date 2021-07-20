@@ -23,6 +23,7 @@ class QuantMarkResultGradient(QuantMarkResult):
                   "ansatz": self.ansatz,
                   "optimizer": self.optimizer,
                   "qubits": self.qubits,
+                  "depth": self.depth,
                   "molecule": self.molecules,
                   "tqversion": self.tqversion,
                   "distances": self.distances,
