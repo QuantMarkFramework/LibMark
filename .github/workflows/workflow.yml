@@ -23,8 +23,8 @@ jobs:
         coverage run -m unittest
         coverage xml -o cov.xml
     - name: "Upload coverage to Codecov"
-       uses: codecov/codecov-action@v2
-       with:
-         files: ./coverage.xml
-         fail_ci_if_error: true
+      uses: codecov/codecov-action@v2
+      with:
+        files: ./cov.xml
+        fail_ci_if_error: true
 
