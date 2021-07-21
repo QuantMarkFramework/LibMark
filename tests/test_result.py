@@ -26,7 +26,8 @@ class testResultScipy(unittest.TestCase):
 
     
     def test_number_of_runs_remains(self):
-        n = random.randint(0, 10)
+        # n = random.randint(5, 9)
+        n = 6
         mol = [mockMolecule() for i in range(n)]
         h_func = self.mock_hamiltonian_function
         ansatz_func = self.mock_ansatz_function
