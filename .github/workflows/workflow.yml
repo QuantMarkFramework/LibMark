@@ -17,7 +17,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        python -m pip install coverage
+        python -m pip install coverage==5.5 tequila-basic==1.5.1
     - name: Create coverage
       run: |
         coverage run -m unittest
