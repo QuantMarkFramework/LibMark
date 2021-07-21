@@ -50,6 +50,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+cov.xml
 
 # Translations
 *.mo
@@ -77,6 +78,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+default*.ipynb
 
 # IPython
 profile_default/
@@ -148,6 +150,17 @@ timer.dat
 # Psi4/Tequila stuff
 molecule*
 psi.*
+*.hdf5
 
 # etc.
 QRE\ 2021\ Demo.py
+
+# QuantMarkResult files for testing
+BFGS*.json
+L-BFGS*.json
+NELDER-MEAD*.json
+nelder-mead*.json
+MOMENTUM*.json
+nesterov*.json
+cobyla*.json
+ADAM*.json
