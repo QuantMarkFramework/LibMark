@@ -15,6 +15,10 @@ class TestTracker(unittest.TestCase):
     def test_gradientOptimizer(self):
         self.assertIsInstance(get_tracker("nesterov"), QuantMarkResultGradient)
 
+    def test_(self):
+        qmrs = get_tracker("nelder-mead")
+        self.assertEqual(str.upper(qmrs.optimizer), str.upper('Nelder-Mead'))
+
 
 if __name__ == '__main__':
     unittest.main()
