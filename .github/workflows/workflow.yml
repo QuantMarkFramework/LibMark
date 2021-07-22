@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v2
     - name: Setup python
       uses: actions/setup-python@v2
       with:
@@ -20,7 +21,7 @@ jobs:
         python -m pip install coverage==5.5 tequila-basic==1.5.1
     - name: Create coverage
       run: |
-        python -m unittest discover -s ./tests/
+        coverage run -m unittest
         coverage xml -o cov.xml
     - name: "Upload coverage to Codecov"
       uses: codecov/codecov-action@v2
