@@ -1,4 +1,6 @@
 # LibMark2
+[![codecov](https://codecov.io/gh/quantum-ohtu/LibMark2/branch/main/graph/badge.svg?token=GSS0W01NXZ)](https://codecov.io/gh/quantum-ohtu/LibMark2)
+
 A simple python package for sending VQE run results to WebMark2
 
 ## Using the package

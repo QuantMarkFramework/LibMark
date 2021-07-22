@@ -1,11 +1,6 @@
-#from quantmark.result_scipy import QuantMarkResultScipy
-#from quantmark.result_gradient import QuantMarkResultGradient
-#from quantmark.result import QuantMarkResult
 import unittest
-# from quantmark.result import QuantMarkResult
 from quantmark.tracker import get_tracker
-import random
-# from unittest.mock import create_autospec
+
 
 class testResultScipy(unittest.TestCase):
 
