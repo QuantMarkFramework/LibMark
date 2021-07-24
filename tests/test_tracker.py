@@ -11,7 +11,7 @@ class TestTracker(unittest.TestCase):
 
     def test_scipyOptimizer(self):
         self.assertIsInstance(get_tracker("bfgs"), QuantMarkResultScipy)
-    
+
     def test_gradientOptimizer(self):
         self.assertIsInstance(get_tracker("nesterov"), QuantMarkResultGradient)
 

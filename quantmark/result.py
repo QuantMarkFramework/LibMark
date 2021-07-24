@@ -56,8 +56,8 @@ class QuantMarkResult(ABC):
         self.histories.append(str(run.history.__dict__))
         self.molecules.append(str(molecule))
         self.hamiltonian.append(str(hamiltonian))
-        self.qubits.append(len(hamiltonian.qubits)) # the number of qubits
-        self.depth.append(ansatz.depth) # Ansatz gate depth
+        self.qubits.append(len(hamiltonian.qubits))  # the number of qubits
+        self.depth.append(ansatz.depth)  # Ansatz gate depth
         self.ansatz.append(str(ansatz))
         self.distances.append(molecule.parameters.get_geometry()[-1][-1][-1])
         self.basis_set = molecule.parameters.basis_set
@@ -79,10 +79,12 @@ class QuantMarkResult(ABC):
         if not file:
             from datetime import datetime
             now = datetime.now()
-            file = self.optimizer + " " + self.transformation + " " + str(now) + ".json"
+            file = self.optimizer + " " + \
+                self.transformation + " " + str(now) + ".json"
         output = open(file, 'w')
         result = self.get_result_dict()
         output.write(json.dumps(result, indent=4))
+        output.close()
         return
 
     def __str__(self):

@@ -160,6 +160,7 @@ BFGS*.json
 L-BFGS*.json
 NELDER-MEAD*.json
 nelder-mead*.json
+Nelder-*.json
 MOMENTUM*.json
 nesterov*.json
 cobyla*.json
