@@ -2,8 +2,8 @@ from .result import QuantMarkResult
 
 
 class QuantMarkResultScipy(QuantMarkResult):
-    def __init__(self, optimizer):
-        super().__init__(optimizer)
+    def __init__(self, optimizer, token):
+        super().__init__(optimizer, token)
         self.scipy_results = []
 
     def make_scipy_result_dict(self, scipy_result):

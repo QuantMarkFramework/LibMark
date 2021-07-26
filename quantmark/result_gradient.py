@@ -2,8 +2,8 @@ from .result import QuantMarkResult
 
 
 class QuantMarkResultGradient(QuantMarkResult):
-    def __init__(self, optimizer):
-        super().__init__(optimizer)
+    def __init__(self, optimizer, token):
+        super().__init__(optimizer, token)
         self.moments = []
 
     def get_transformation(self, molecule):

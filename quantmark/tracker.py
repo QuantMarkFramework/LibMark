@@ -8,10 +8,10 @@ gradient_optimizers = [
     ]
 
 
-def get_tracker(optimizer):
+def get_tracker(optimizer, token):
     if optimizer.upper() in scipy_optimizers:
-        return QuantMarkResultScipy(optimizer)
+        return QuantMarkResultScipy(optimizer, token)
     elif optimizer.upper() in gradient_optimizers:
-        return QuantMarkResultGradient(optimizer)
+        return QuantMarkResultGradient(optimizer, token)
     else:
         raise ValueError(f"{optimizer.upper()} not supported.")

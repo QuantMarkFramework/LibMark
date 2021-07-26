@@ -10,7 +10,8 @@ url = 'http://localhost:8000/api/'
 
 
 class QuantMarkResult(ABC):
-    def __init__(self, optimizer):
+    def __init__(self, optimizer, token):
+        self.token = token
         self.energies = []
         self.variables = []
         self.histories = []
@@ -71,7 +72,10 @@ class QuantMarkResult(ABC):
     def push(self):
         """Send Results to server"""
         result = self.get_result_dict()
-        response = requests.post(url, json=json.dumps(result, indent=4))
+        headers = {
+            'Authorization': self.token
+        }
+        response = requests.post(url, json=json.dumps(result, indent=4), headers=headers)
         return response
 
     def save(self, file=""):
