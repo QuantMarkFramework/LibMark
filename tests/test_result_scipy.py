@@ -11,7 +11,7 @@ class testResultScipy(unittest.TestCase):
         self.U = mockAnsatz()
 
     def mock_vqe(self, molecules, optimizer):
-        runs = get_tracker(optimizer)
+        runs = get_tracker(optimizer, "token")
         for molecule in molecules:
             runs.add_run(self.run, molecule, self.H, self.U)
         return runs
@@ -32,7 +32,7 @@ class testResultScipy(unittest.TestCase):
         self.assertEqual(n, len(runs.molecules))
 
     def test_add_non_compatible_run(self):
-        qmrs = get_tracker("nelder-mead")
+        qmrs = get_tracker("nelder-mead", "token")
         mol = mockFaultyMolecule()
         self.assertRaises(TypeError, qmrs.add_run,
                           (self.run, mol, self.H, self.U))
