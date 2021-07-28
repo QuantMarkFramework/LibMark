@@ -31,4 +31,30 @@ JSON file will be created to the root.
 
 Example usage:
 
-![image](https://github.com/quantum-ohtu/LibMark2/blob/main/images/vqe.png)
+```python
+# Generic batch optimize for "any" VQE
+def run_vqe(molecules, hamiltonian_function, ansatz_function, optimizer, silent=True, **ansatz_kwargs):
+    results = []
+    qresult = get_tracker(optimizer, 'TOKEN_HERE') # Start quantmark tracking
+    for i, molecule in enumerate(molecules):
+        print(str(i+1)+"/"+str(len(molecules)), end="\t")
+        print("Creating the Hamiltonian.", end="\t")
+        H = hamiltonian_function(molecule)
+        n_qubits = len(H.qubits)
+        print("Creating ansatz.", end="\t")
+        U = ansatz_function(molecule=molecule, n_qubits=n_qubits, **ansatz_kwargs)
+        print("Creating objective function")
+        E = tq.ExpectationValue(H=H, U=U)
+        variables = {k:0.0 for k in U.extract_variables()}
+        print("Optimizing.", end="\t")
+        result = tq.minimize(objective=E, method=optimizer, initial_values=variables, silent=silent)
+        print()
+        results.append(result)
+        qresult.add_run(result, molecule, H, U) # Adding the intermediate result
+    print("Done")
+    qresult.push() # Push results to the server
+    qresult.save() # Save the data to a JSON file
+    return results
+```
+
+The token can be aqcuired from the quantmark website.
