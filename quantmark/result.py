@@ -11,7 +11,7 @@ url = 'http://localhost:8000/api/'
 
 class QuantMarkResult(ABC):
     def __init__(self, optimizer, token):
-        self.token = token
+        self.token = f'Token {token}'
         self.energies = []
         self.variables = []
         self.histories = []
