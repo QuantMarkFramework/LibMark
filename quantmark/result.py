@@ -5,8 +5,8 @@ import json
 
 
 # Use this (or wherever your local WebMark2 is running) while developing
-# url = 'http://localhost:8000/api/'
-url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
+url = 'http://localhost:8000/api/'
+# url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 
 class QuantMarkResult(ABC):
