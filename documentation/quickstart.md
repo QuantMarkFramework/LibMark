@@ -1,6 +1,6 @@
 # LibMark quickstart guide (for Linux)
 
-For creating a virtual environment in which to run LibMark, you should start by getting Miniconda: https://docs.conda.io/en/latest/miniconda.html (A good little resource for the use of Conda is the [Conda cheatsheet](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf))
+For creating a virtual environment in which to run LibMark, you should start by [getting Miniconda](https://docs.conda.io/en/latest/miniconda.html) (A good little resource for the use of Conda is the [Conda cheatsheet](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf))
 
 Some of Tequila's dependencies require Python 3.7, so the virtual environment should be set to use that. The command to create environments is
 
