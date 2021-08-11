@@ -3,6 +3,10 @@
 
 A simple python package for sending VQE run results to WebMark2
 
+## Getting started
+
+You can check the currently viable guide on how to get started with Libmark from the [quickstart guide](documentation/quickstart.md).
+
 ## Using the package
 
 Make sure that the package is somewhere in your PYTHONPATH, then after using
