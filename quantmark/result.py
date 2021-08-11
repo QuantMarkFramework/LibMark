@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from tequila.circuit.compiler import Compiler
 import tequila
 import requests
 import json
@@ -8,9 +9,32 @@ import json
 # url = 'http://localhost:8000/api/'
 url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
+DEFAULT_COMPILER_ARGUMENTS = {
+    "multitarget": True,
+    "multicontrol": True,
+    "trotterized": True,
+    "generalized_rotation": True,
+    "exponential_pauli": True,
+    "controlled_exponential_pauli": True,
+    "hadamard_power": True,
+    "controlled_power": True,
+    "power": True,
+    "toffoli": True,
+    "controlled_phase": False,
+    "phase": True,
+    "phase_to_z": False,
+    "controlled_rotation": True,
+    "swap": True,
+    "cc_max": True,
+    "ry_gate": False,
+    "y_gate": False,
+    "ch_gate": True
+}
+
 
 class QuantMarkResult(ABC):
     def __init__(self, optimizer, token):
+        self.compiler = Compiler(**DEFAULT_COMPILER_ARGUMENTS)
         self.token = f'Token {token}'
         self.energies = []
         self.variables = []
@@ -38,6 +62,17 @@ class QuantMarkResult(ABC):
                 return t
             return ' '
 
+    # This operation takes some time to execute
+    # TODO extract every run vs. extract all at once afterwards?
+    def extract_gates(self, ansatz):
+        try:
+            gates = self.compiler(ansatz)
+        except Exception:
+            gates = ansatz
+            print("Warning: could not extract gates from ansatz, \
+                   the experiment will not be automatically reproducible!")
+        return str(gates).split('\n')[1:-1]
+
     def add_run(self, run, molecule, hamiltonian, ansatz):
         """Add VQE run to the Results
 
@@ -59,7 +94,7 @@ class QuantMarkResult(ABC):
         self.hamiltonian.append(str(hamiltonian))
         self.qubits.append(len(hamiltonian.qubits))  # the number of qubits
         self.depth.append(ansatz.depth)  # Ansatz gate depth
-        self.ansatz.append(str(ansatz))
+        self.ansatz.append([str(gate) for gate in self.extract_gates(ansatz)])
         self.distances.append(molecule.parameters.get_geometry()[-1][-1][-1])
         self.basis_set = molecule.parameters.basis_set
         self.transformation = self.get_transformation(molecule)
@@ -75,7 +110,9 @@ class QuantMarkResult(ABC):
         headers = {
             'Authorization': self.token
         }
-        response = requests.post(url, json=json.dumps(result, indent=4), headers=headers)
+        response = requests.post(
+                        url, json=json.dumps(result, indent=4), headers=headers
+                    )
         return response
 
     def save(self, file=""):

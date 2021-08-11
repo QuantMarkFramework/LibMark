@@ -10,10 +10,10 @@ class TestTracker(unittest.TestCase):
         self.assertRaises(ValueError, get_tracker, "nonexistent", "token")
 
     def test_scipyOptimizer(self):
-        self.assertIsInstance(get_tracker("bfgs", "token"), QuantMarkResultScipy)
+        self.assertIsInstance(get_tracker("bfgs", "token"), QuantMarkResultScipy)  # noqa
 
     def test_gradientOptimizer(self):
-        self.assertIsInstance(get_tracker("nesterov", "token"), QuantMarkResultGradient)
+        self.assertIsInstance(get_tracker("nesterov", "token"), QuantMarkResultGradient)  # noqa
 
     def test_(self):
         qmrs = get_tracker("nelder-mead", "token")
