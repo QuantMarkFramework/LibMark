@@ -1,7 +1,7 @@
 # LibMark2
 [![codecov](https://codecov.io/gh/quantum-ohtu/LibMark2/branch/main/graph/badge.svg?token=GSS0W01NXZ)](https://codecov.io/gh/quantum-ohtu/LibMark2)
 
-A simple python package for sending VQE run results to WebMark2
+A simple python package for sending and pulling VQE run results to/from WebMark2
 
 ## Getting started
 
@@ -21,19 +21,19 @@ Data can be added to the object using
 ```
 qresult.add_run(results, molecule, hamiltonian, ansatz)
 ```
-Where 'results' is an object returned by tq.minimize. As of 11.7.2021 the three other fields (molecule, hamiltonian, ansatz) can be pretty much anything, since they are just stored as strings in WebMark2.
+Where 'results' is an object returned by tq.minimize. As of 11.8.2021 the three other fields (molecule, hamiltonian, ansatz) can be pretty much anything, since they are just stored as strings in WebMark2.
 
 Data can be sent to [WebMark2](https://github.com/quantum-ohtu/WebMark2), by calling the ```push``` function of any Result object
 ```
 qresult.push()
 ```
-Want to save the data? With a
+Want to save the data?
 ```
 qresult.save()
 ```
-JSON file will be created to the root.
+will save a JSON file to the root.
 
-Example usage:
+### Pushing
 
 ```python
 # Generic batch optimize for "any" VQE
@@ -62,3 +62,18 @@ def run_vqe(molecules, hamiltonian_function, ansatz_function, optimizer, silent=
 ```
 
 The token can be aqcuired from the quantmark website.
+
+### Pulling
+
+You can pull any public result (or your own result) from WebMark:
+```python
+from LibMark2.quantmark.api import get_experiment, get_data
+
+data = get_data(id, 'TOKEN_HERE') # Download all available information as a dict
+experiment = get_experiment(id, 'TOKEN_HERE') # Download experiment
+results = experiment.run_experiment() # Run the experiment
+```
+
+"results" will contain a list of tuples (distance, results)
+
+
