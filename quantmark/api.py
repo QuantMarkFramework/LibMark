@@ -17,6 +17,15 @@ def get_distances():
     return ast.literal_eval(res.content.decode('UTF-8'))
 
 
+def get_fci(basis_set):
+    """Get FCI values"""
+    try:
+        res = requests.get(f'{url}fci/{basis_set}/')
+        return ast.literal_eval(res.content.decode('UTF-8'))
+    except Exception:
+        return 'Requested basis set not available.'
+
+
 def get_data(id, token):
     """Get a dump of all data available about an experiment"""
     headers = {
