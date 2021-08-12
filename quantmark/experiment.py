@@ -5,7 +5,7 @@ from tequila.circuit.circuit import QCircuit
 from .vqe import run
 
 # Heavily inspired by:
-# https://github.com/ohtu2021-kvantti/LibMark/blob/29cbadc107be81374258b7aa2a98bb331ce7bdc9/quantmark/circuit.py
+# https://github.com/ohtu2021-kvantti/LibMark/blob/main/quantmark/circuit.py
 
 
 @dataclass

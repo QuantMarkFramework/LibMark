@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from tequila.circuit.compiler import Compiler
+from datetime import datetime
 import tequila
 import requests
 import json
@@ -51,8 +52,6 @@ class QuantMarkResult(ABC):
         self.distances = []
 
     def get_transformation(self, molecule):
-        # Parsing the transformation name is a bit of a hassle
-        # try-except so that it doesn't cause the whole collection to fail
         try:
             t = str(molecule.transformation)
             t_name = t.split('function')[1].split('at')[0].strip()
@@ -78,7 +77,7 @@ class QuantMarkResult(ABC):
 
         Parameters
         ----------
-        result:
+        run:
             object returned by tq.minimize
         molecule : tequila.quantumchemistry.psi4_interface.QuantumChemistryPsi4
             molecule used in the run
@@ -98,7 +97,6 @@ class QuantMarkResult(ABC):
         self.distances.append(molecule.parameters.get_geometry()[-1][-1][-1])
         self.basis_set = molecule.parameters.basis_set
         self.transformation = self.get_transformation(molecule)
-        pass
 
     @abstractmethod
     def get_result_dict(self):
@@ -118,7 +116,6 @@ class QuantMarkResult(ABC):
     def save(self, file=""):
         """Save data locally for testing and verification"""
         if not file:
-            from datetime import datetime
             now = datetime.now()
             file = self.optimizer + " " + \
                 self.transformation + " " + str(now) + ".json"

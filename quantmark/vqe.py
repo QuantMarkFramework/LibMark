@@ -22,5 +22,3 @@ def run(exp):
 def create_H2(R, basis_set, transformation):
     geometry = f'H 0.0 0.0 0.0\nH 0.0 0.0 {R}'
     return tq.chemistry.Molecule(geometry=geometry, basis_set=basis_set, transformation=transformation) # noqa
-
-# molecule.make_hamiltonian()

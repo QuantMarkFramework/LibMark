@@ -11,7 +11,6 @@ class QuantMarkResultGradient(QuantMarkResult):
 
     def add_run(self, run, molecule, hamiltonian, ansatz):
         super().add_run(run, molecule, hamiltonian, ansatz)
-        # Just do lazy appending for now.
         self.moments.append(str(run.moments))
 
     def get_result_dict(self):
