@@ -41,6 +41,7 @@ class QuantMarkResult(ABC):
         self.variables = []
         self.histories = []
         self.molecules = []
+        self.geometries = []
         self.hamiltonian = []
         self.qubits = []
         self.depth = []
@@ -49,7 +50,6 @@ class QuantMarkResult(ABC):
         self.tqversion = tequila.__version__
         self.basis_set = None
         self.transformation = None
-        self.distances = []
 
     def get_transformation(self, molecule):
         try:
@@ -90,11 +90,11 @@ class QuantMarkResult(ABC):
         self.variables.append(str(run.variables).replace('\n', ' '))
         self.histories.append(str(run.history.__dict__))
         self.molecules.append(str(molecule))
+        self.geometries.append(molecule.parameters.get_geometry())
         self.hamiltonian.append(str(hamiltonian))
         self.qubits.append(len(hamiltonian.qubits))  # the number of qubits
         self.depth.append(ansatz.depth)  # Ansatz gate depth
         self.ansatz.append([str(gate) for gate in self.extract_gates(ansatz)])
-        self.distances.append(molecule.parameters.get_geometry()[-1][-1][-1])
         self.basis_set = molecule.parameters.basis_set
         self.transformation = self.get_transformation(molecule)
 

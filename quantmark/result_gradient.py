@@ -26,7 +26,7 @@ class QuantMarkResultGradient(QuantMarkResult):
             "depth": self.depth,
             "molecule": self.molecules,
             "tqversion": self.tqversion,
-            "distances": self.distances,
+            "geometries": self.geometries,
             "basis_set": self.basis_set,
             "transformation": self.transformation
         }
