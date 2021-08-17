@@ -7,8 +7,8 @@ import json
 
 
 # Use this (or wherever your local WebMark2 is running) while developing
-# url = 'http://localhost:8000/api/'
-url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
+url = 'http://localhost:8000/api/'
+# url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 DEFAULT_COMPILER_ARGUMENTS = {
     "multitarget": True,
@@ -44,7 +44,8 @@ class QuantMarkResult(ABC):
         self.geometries = []
         self.hamiltonian = []
         self.qubits = []
-        self.depth = []
+        self.elementary_depth = []
+        self.fermionic_depth = []
         self.ansatz = []
         self.optimizer = optimizer
         self.tqversion = tequila.__version__
@@ -70,8 +71,7 @@ class QuantMarkResult(ABC):
             gates = ansatz
             print("Warning: could not extract gates from ansatz, \
                    the experiment will not be automatically reproducible!")
-        return str(gates).split('\n')[1:-1]
-
+        return (str(gates).split('\n')[1:-1], gates.depth)
     def add_run(self, run, molecule, hamiltonian, ansatz):
         """Add VQE run to the Results
 
@@ -86,6 +86,8 @@ class QuantMarkResult(ABC):
         ansatz : tequila.circuit.circuit.QCircuit
             object returned by molecule.make_uccsd_ansatz()
         """
+        elem_ansatz = self.extract_gates(ansatz)
+        
         self.energies.append(run.energy)
         self.variables.append(str(run.variables).replace('\n', ' '))
         self.histories.append(str(run.history.__dict__))
@@ -93,8 +95,9 @@ class QuantMarkResult(ABC):
         self.geometries.append(molecule.parameters.get_geometry())
         self.hamiltonian.append(str(hamiltonian))
         self.qubits.append(len(hamiltonian.qubits))  # the number of qubits
-        self.depth.append(ansatz.depth)  # Ansatz gate depth
-        self.ansatz.append([str(gate) for gate in self.extract_gates(ansatz)])
+        self.fermionic_depth.append(ansatz.depth)  # Ansatz gate depth
+        self.elementary_depth.append(elem_ansatz[1])
+        self.ansatz.append([str(gate) for gate in elem_ansatz[0]])
         self.basis_set = molecule.parameters.basis_set
         self.transformation = self.get_transformation(molecule)
 
