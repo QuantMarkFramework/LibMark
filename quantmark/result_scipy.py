@@ -28,6 +28,8 @@ class QleaderResultScipy(QleaderResult):
                   "scipy_results": self.scipy_results,
                   "hamiltonian": self.hamiltonian,
                   "ansatz": self.ansatz,
+                  "single_qubit": self.single_qubit,
+                  "double_qubit": self.double_qubit,
                   "optimizer": self.optimizer,
                   "qubits": self.qubits,
                   "fermionic_depth": self.fermionic_depth,

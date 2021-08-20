@@ -1,14 +1,14 @@
 from abc import ABC, abstractmethod
 from tequila.circuit.compiler import Compiler
 from datetime import datetime
-import tequila
+import tequila as tq
 import requests
 import json
 
 
 # Use this (or wherever your local WebMark2 is running) while developing
-url = 'http://localhost:8000/api/'
-# url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
+# url = 'http://localhost:8000/api/'
+url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 DEFAULT_COMPILER_ARGUMENTS = {
     "multitarget": True,
@@ -47,8 +47,10 @@ class QleaderResult(ABC):
         self.elementary_depth = []
         self.fermionic_depth = []
         self.ansatz = []
+        self.single_qubit = []
+        self.double_qubit = []
         self.optimizer = optimizer
-        self.tqversion = tequila.__version__
+        self.tqversion = tq.__version__
         self.basis_set = None
         self.transformation = None
 
@@ -66,12 +68,29 @@ class QleaderResult(ABC):
     # TODO extract every run vs. extract all at once afterwards?
     def extract_gates(self, ansatz):
         try:
-            gates = self.compiler(ansatz)
+            circuit = self.compiler(ansatz)
         except Exception:
-            gates = ansatz
+            circuit = ansatz
             print("Warning: could not extract gates from ansatz, \
                    the experiment will not be automatically reproducible!")
-        return (str(gates).split('\n')[1:-1], gates.depth)
+        counts = self.gate_qubit_counts(circuit)
+
+        return (str(circuit).split('\n')[1:-1], circuit.depth, counts[0], counts[1])
+
+    # Same possible problem as above
+    def gate_qubit_counts(self, circuit):
+        if circuit is not tq.QCircuit:
+            pass
+
+        counts = [0, 0]
+        for gate in circuit.gates:
+            qubits = len(gate.target) + len(gate.control)
+            if qubits == 1:
+                counts[0] += 1
+            elif qubits == 2:
+                counts[1] += 2
+        return counts
+
     def add_run(self, run, molecule, hamiltonian, ansatz):
         """Add VQE run to the Results
 
@@ -87,7 +106,7 @@ class QleaderResult(ABC):
             object returned by molecule.make_uccsd_ansatz()
         """
         elem_ansatz = self.extract_gates(ansatz)
-        
+
         self.energies.append(run.energy)
         self.variables.append(str(run.variables).replace('\n', ' '))
         self.histories.append(str(run.history.__dict__))
@@ -98,6 +117,8 @@ class QleaderResult(ABC):
         self.fermionic_depth.append(ansatz.depth)  # Ansatz gate depth
         self.elementary_depth.append(elem_ansatz[1])
         self.ansatz.append([str(gate) for gate in elem_ansatz[0]])
+        self.single_qubit.append(elem_ansatz[2])
+        self.double_qubit.append(elem_ansatz[3])
         self.basis_set = molecule.parameters.basis_set
         self.transformation = self.get_transformation(molecule)
 
