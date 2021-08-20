@@ -9,9 +9,14 @@ gradient_optimizers = [
 
 
 def get_tracker(optimizer, token):
+    """Returns a QleaderResult object based on the optimizer specified"""
     if optimizer.upper() in scipy_optimizers:
         return QleaderResultScipy(optimizer, token)
     elif optimizer.upper() in gradient_optimizers:
         return QleaderResultGradient(optimizer, token)
     else:
         raise ValueError(f"{optimizer.upper()} not supported.")
+
+def get_optimizers():
+    """Returns a list of supported optimizers"""
+    return scipy_optimizers + gradient_optimizers

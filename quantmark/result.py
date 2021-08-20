@@ -8,7 +8,7 @@ import json
 
 # Use this (or wherever your local WebMark2 is running) while developing
 # url = 'http://localhost:8000/api/'
-url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
+# url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 DEFAULT_COMPILER_ARGUMENTS = {
     "multitarget": True,
@@ -34,7 +34,34 @@ DEFAULT_COMPILER_ARGUMENTS = {
 
 
 class QleaderResult(ABC):
+    """QleaderResult object for collecting data about a set of VQE runs.
+
+    ...
+
+    Methods
+    -------
+    add_run(run, molecule, hamiltonian, ansatz)
+        Add a VQE run to the result object
+    push()
+        Push results to the server
+    save()
+        Saves the results to a JSON file
+    """
+    
     def __init__(self, optimizer, token):
+        """Initializes the QleaderResult object.
+
+        Parameters
+        ----------
+        optimizer : str
+            The name of the opimizer used e.g "Nelder-Mead" 
+            see: quantmark.tracker.get_optimizers()
+            for supported optioms.
+
+        token : str
+            Authorization token from the Quantmark website.
+        """
+
         self.compiler = Compiler(**DEFAULT_COMPILER_ARGUMENTS)
         self.token = f'Token {token}'
         self.energies = []
@@ -79,7 +106,7 @@ class QleaderResult(ABC):
 
     # Same possible problem as above
     def gate_qubit_counts(self, circuit):
-        if circuit is not tq.QCircuit:
+        if not isinstance(circuit, tq.QCircuit):
             return [0, 0]
 
         counts = [0, 0]

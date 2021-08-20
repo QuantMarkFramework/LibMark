@@ -36,7 +36,10 @@ def get_data(id, token):
 
 
 def get_experiment(id, token):
-    """Get information required to recreate a result"""
+    """Get information required to recreate a result
+    
+    return QleaderExperiment
+    """
     headers = {
         'Authorization': f'Token {token}'
     }

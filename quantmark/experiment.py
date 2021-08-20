@@ -17,6 +17,18 @@ class Gate:
 
 
 class QleaderExperiment():
+    """ An object which can be used to recreate a VQE result from the Quantmark website.
+
+    ...
+
+    Methods
+    -------
+    run_experiment()
+        Runs the experiment and returns the results
+    build_circuits()
+        Builds a tequila.circuit.circuit.QCircuit objects and returns them
+    """
+    
     def __init__(self, **kwargs):
         self.distances = kwargs['distances']
         self.ansatz = kwargs['ansatz']
