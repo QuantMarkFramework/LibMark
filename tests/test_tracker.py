@@ -1,5 +1,5 @@
-from quantmark.result_scipy import QuantMarkResultScipy
-from quantmark.result_gradient import QuantMarkResultGradient
+from quantmark.result_scipy import QleaderResultScipy
+from quantmark.result_gradient import QleaderResultGradient
 import unittest
 from quantmark.tracker import get_tracker
 
@@ -10,10 +10,10 @@ class TestTracker(unittest.TestCase):
         self.assertRaises(ValueError, get_tracker, "nonexistent", "token")
 
     def test_scipyOptimizer(self):
-        self.assertIsInstance(get_tracker("bfgs", "token"), QuantMarkResultScipy)  # noqa
+        self.assertIsInstance(get_tracker("bfgs", "token"), QleaderResultScipy)  # noqa
 
     def test_gradientOptimizer(self):
-        self.assertIsInstance(get_tracker("nesterov", "token"), QuantMarkResultGradient)  # noqa
+        self.assertIsInstance(get_tracker("nesterov", "token"), QleaderResultGradient)  # noqa
 
     def test_(self):
         qmrs = get_tracker("nelder-mead", "token")

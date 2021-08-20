@@ -33,7 +33,7 @@ DEFAULT_COMPILER_ARGUMENTS = {
 }
 
 
-class QuantMarkResult(ABC):
+class QleaderResult(ABC):
     def __init__(self, optimizer, token):
         self.compiler = Compiler(**DEFAULT_COMPILER_ARGUMENTS)
         self.token = f'Token {token}'

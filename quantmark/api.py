@@ -1,7 +1,7 @@
 import requests
 import ast
 import json
-from .experiment import QuantMarkExperiment
+from .experiment import QleaderExperiment
 
 # Use this (or wherever your local WebMark2 is running) while developing
 # url = 'http://localhost:8000/api/'
@@ -44,4 +44,4 @@ def get_experiment(id, token):
     res_dict = json.loads(res.content)
     for i in range(len(res_dict['ansatz'])):
         res_dict['ansatz'][i] = ast.literal_eval(res_dict['ansatz'][i])
-    return QuantMarkExperiment(**res_dict)
+    return QleaderExperiment(**res_dict)

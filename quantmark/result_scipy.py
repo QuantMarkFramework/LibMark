@@ -1,7 +1,7 @@
-from .result import QuantMarkResult
+from .result import QleaderResult
 
 
-class QuantMarkResultScipy(QuantMarkResult):
+class QleaderResultScipy(QleaderResult):
     def __init__(self, optimizer, token):
         super().__init__(optimizer, token)
         self.scipy_results = []

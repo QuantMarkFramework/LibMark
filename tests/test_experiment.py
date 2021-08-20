@@ -1,12 +1,12 @@
 import unittest
 import ast, os, sys  # noqa
-from quantmark.experiment import QuantMarkExperiment
+from quantmark.experiment import QleaderExperiment
 
 
 class testExperiment(unittest.TestCase):
 
     def setUp(self):
-        self.experiment = QuantMarkExperiment(**ast.literal_eval(
+        self.experiment = QleaderExperiment(**ast.literal_eval(
             open(os.path.join(sys.path[0], 'tests/test_data.txt'), 'r').read()
         ))
 

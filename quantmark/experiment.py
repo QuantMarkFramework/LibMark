@@ -16,7 +16,7 @@ class Gate:
     parameter: typing.Union[str, float] = None
 
 
-class QuantMarkExperiment():
+class QleaderExperiment():
     def __init__(self, **kwargs):
         self.distances = kwargs['distances']
         self.ansatz = kwargs['ansatz']
