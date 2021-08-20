@@ -80,7 +80,7 @@ class QleaderResult(ABC):
     # Same possible problem as above
     def gate_qubit_counts(self, circuit):
         if circuit is not tq.QCircuit:
-            pass
+            return [0, 0]
 
         counts = [0, 0]
         for gate in circuit.gates:
