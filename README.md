@@ -7,21 +7,24 @@ A simple python package for sending and pulling VQE run results to/from WebMark2
 
 You can check the currently viable guide on how to get started with Libmark from the [quickstart guide](documentation/quickstart.md).
 
+There is also an example [notebook](https://github.com/quantum-ohtu/QuantMark/blob/main/QuantMark_demo.ipynb) available which showcases the functionality.
+
 ## Using the package
 
 Make sure that the package is somewhere in your PYTHONPATH, then after using
 ```
 from LibMark2.quantmark.tracker import get_tracker
 
-qresult = get_tracker(optimizer)
+qresult = get_tracker(optimizer, 'TOKEN')
 ```
-where "optimizer" is simply a string (name of optimizer used). 'get_tracker' returns the correct Result object.
+where "optimizer" is simply a string (name of optimizer used). The token can be acquired from the Quantmark website.
+'get_tracker' returns the correct Result object.
 
 Data can be added to the object using
 ```
 qresult.add_run(results, molecule, hamiltonian, ansatz)
 ```
-Where 'results' is an object returned by tq.minimize. As of 11.8.2021 the three other fields (molecule, hamiltonian, ansatz) can be pretty much anything, since they are just stored as strings in WebMark2.
+Where 'results' is an object returned by tq.minimize.
 
 Data can be sent to [WebMark2](https://github.com/quantum-ohtu/WebMark2), by calling the ```push``` function of any Result object
 ```
@@ -60,8 +63,6 @@ def run_vqe(molecules, hamiltonian_function, ansatz_function, optimizer, silent=
     qresult.save() # Save the data to a JSON file
     return results
 ```
-
-The token can be aqcuired from the quantmark website.
 
 ### Pulling
 
