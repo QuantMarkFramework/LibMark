@@ -4,8 +4,8 @@ import json
 from .experiment import QleaderExperiment
 
 # Use this (or wherever your local WebMark2 is running) while developing
-url = 'http://localhost:8000/api/'
-# url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
+# url = 'http://localhost:8000/api/'
+url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 
 def get_distances():

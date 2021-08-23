@@ -7,8 +7,8 @@ import json
 
 
 # Use this (or wherever your local WebMark2 is running) while developing
-url = 'http://localhost:8000/api/'
-# url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
+# url = 'http://localhost:8000/api/'
+url = 'https://ohtup-staging.cs.helsinki.fi/qleader/api/'
 
 DEFAULT_COMPILER_ARGUMENTS = {
     "multitarget": True,
@@ -162,7 +162,7 @@ class QleaderResult(ABC):
         response = requests.post(
                         url, json=json.dumps(result, indent=4), headers=headers
                     )
-        return response
+        return response.json()
 
     def save(self, file=""):
         """Save data locally for testing and verification"""
