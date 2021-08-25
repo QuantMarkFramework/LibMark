@@ -6,9 +6,6 @@ class QleaderResultGradient(QleaderResult):
         super().__init__(optimizer, token)
         self.moments = []
 
-    def get_transformation(self, molecule):
-        return super().get_transformation(molecule)
-
     def add_run(self, run, molecule, hamiltonian, ansatz):
         super().add_run(run, molecule, hamiltonian, ansatz)
         self.moments.append(str(run.moments))
@@ -34,12 +31,3 @@ class QleaderResultGradient(QleaderResult):
             "transformation": self.transformation
         }
         return result
-
-    def push(self):
-        return super().push()
-
-    def save(self, file=""):
-        return super().save(file)
-
-    def __str__(self):
-        return super().__str__()

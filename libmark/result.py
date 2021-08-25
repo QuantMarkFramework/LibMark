@@ -47,14 +47,14 @@ class QleaderResult(ABC):
     save()
         Saves the results to a JSON file
     """
-    
+
     def __init__(self, optimizer, token):
         """Initializes the QleaderResult object.
 
         Parameters
         ----------
         optimizer : str
-            The name of the opimizer used e.g "Nelder-Mead" 
+            The name of the opimizer used e.g "Nelder-Mead"
             see: quantmark.tracker.get_optimizers()
             for supported optioms.
 
@@ -81,16 +81,6 @@ class QleaderResult(ABC):
         self.basis_set = None
         self.transformation = None
 
-    def get_transformation(self, molecule):
-        try:
-            t = str(molecule.transformation)
-            t_name = t.split('function')[1].split('at')[0].strip()
-            return t_name
-        except Exception:
-            if len(t.split()) == 1:
-                return t
-            return ' '
-
     # This operation takes some time to execute
     # TODO extract every run vs. extract all at once afterwards?
     def extract_gates(self, ansatz):
@@ -102,7 +92,8 @@ class QleaderResult(ABC):
                    the experiment will not be automatically reproducible!")
         counts = self.gate_qubit_counts(circuit)
 
-        return (str(circuit).split('\n')[1:-1], circuit.depth, counts[0], counts[1])
+        return (str(circuit).split('\n')[1:-1],
+                circuit.depth, counts[0], counts[1])
 
     # Same possible problem as above
     def gate_qubit_counts(self, circuit):
@@ -115,7 +106,7 @@ class QleaderResult(ABC):
             if qubits == 1:
                 counts[0] += 1
             elif qubits == 2:
-                counts[1] += 2
+                counts[1] += 1
         return counts
 
     def add_run(self, run, molecule, hamiltonian, ansatz):
@@ -147,7 +138,7 @@ class QleaderResult(ABC):
         self.single_qubit.append(elem_ansatz[2])
         self.double_qubit.append(elem_ansatz[3])
         self.basis_set = molecule.parameters.basis_set
-        self.transformation = self.get_transformation(molecule)
+        self.transformation = str(molecule.transformation)
 
     @abstractmethod
     def get_result_dict(self):

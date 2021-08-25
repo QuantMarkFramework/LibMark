@@ -17,6 +17,7 @@ def get_tracker(optimizer, token):
     else:
         raise ValueError(f"{optimizer.upper()} not supported.")
 
+
 def get_optimizers():
     """Returns a list of supported optimizers"""
     return scipy_optimizers + gradient_optimizers

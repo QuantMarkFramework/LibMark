@@ -1,7 +1,7 @@
-from quantmark.result_scipy import QleaderResultScipy
-from quantmark.result_gradient import QleaderResultGradient
+from libmark.result_scipy import QleaderResultScipy
+from libmark.result_gradient import QleaderResultGradient
 import unittest
-from quantmark.tracker import get_tracker
+from libmark.tracker import get_tracker
 
 
 class TestTracker(unittest.TestCase):
