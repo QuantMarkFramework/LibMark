@@ -1,17 +1,13 @@
-from .result import QuantMarkResult
+from .result import QleaderResult
 
 
-class QuantMarkResultGradient(QuantMarkResult):
+class QleaderResultGradient(QleaderResult):
     def __init__(self, optimizer, token):
         super().__init__(optimizer, token)
         self.moments = []
 
-    def get_transformation(self, molecule):
-        return super().get_transformation(molecule)
-
     def add_run(self, run, molecule, hamiltonian, ansatz):
         super().add_run(run, molecule, hamiltonian, ansatz)
-        # Just do lazy appending for now.
         self.moments.append(str(run.moments))
 
     def get_result_dict(self):
@@ -22,22 +18,16 @@ class QuantMarkResultGradient(QuantMarkResult):
             "moments": self.moments,
             "hamiltonian": self.hamiltonian,
             "ansatz": self.ansatz,
+            "single_qubit": self.single_qubit,
+            "double_qubit": self.double_qubit,
             "optimizer": self.optimizer,
             "qubits": self.qubits,
-            "depth": self.depth,
+            "fermionic_depth": self.fermionic_depth,
+            "elementary_depth": self.elementary_depth,
             "molecule": self.molecules,
             "tqversion": self.tqversion,
-            "distances": self.distances,
+            "geometries": self.geometries,
             "basis_set": self.basis_set,
             "transformation": self.transformation
         }
         return result
-
-    def push(self):
-        return super().push()
-
-    def save(self, file=""):
-        return super().save(file)
-
-    def __str__(self):
-        return super().__str__()

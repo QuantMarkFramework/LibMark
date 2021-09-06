@@ -1,5 +1,5 @@
-from .result_scipy import QuantMarkResultScipy
-from .result_gradient import QuantMarkResultGradient
+from .result_scipy import QleaderResultScipy
+from .result_gradient import QleaderResultGradient
 
 scipy_optimizers = ["NELDER-MEAD", "BFGS", "L-BFGS-B", "COBYLA"]
 gradient_optimizers = [
@@ -9,9 +9,15 @@ gradient_optimizers = [
 
 
 def get_tracker(optimizer, token):
+    """Returns a QleaderResult object based on the optimizer specified"""
     if optimizer.upper() in scipy_optimizers:
-        return QuantMarkResultScipy(optimizer, token)
+        return QleaderResultScipy(optimizer, token)
     elif optimizer.upper() in gradient_optimizers:
-        return QuantMarkResultGradient(optimizer, token)
+        return QleaderResultGradient(optimizer, token)
     else:
         raise ValueError(f"{optimizer.upper()} not supported.")
+
+
+def get_optimizers():
+    """Returns a list of supported optimizers"""
+    return scipy_optimizers + gradient_optimizers
